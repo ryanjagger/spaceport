@@ -20,9 +20,6 @@ export function Layout() {
           </NavLink>
         </nav>
       </header>
-      <p className={styles.demo}>
-        Shared demo: anyone with this link can book or cancel. Data resets periodically.
-      </p>
       <main className={styles.main}>
         <Outlet />
       </main>

@@ -53,13 +53,6 @@
   color: var(--surface);
 }
 
-.demo {
-  padding: 6px var(--gutter);
-  background: var(--signal-soft);
-  border-bottom: 1px solid #e8d48a;
-  font-size: 0.85rem;
-}
-
 .main {
   max-width: 1180px;
   margin: 0 auto;
