@@ -45,7 +45,7 @@ Capabilities:
 
 - Book: ship, Central date (today or later), duration (30 minutes to 8 hours in 30-minute steps), start time on :00 or :30, free-text pilot name.
 - Unavailable start times carry a reason: `booked`, `buffer` (refuel) or `past`.
-- Fleet view: one timeline row per ship for a chosen day, plus the same bookings as a list grouped by ship. The 30-minute refuel buffer after each active booking is shown.
+- Fleet view: one timeline row per ship for a chosen day, or, on a phone, the same bookings as a list grouped by ship. The 30-minute refuel buffer after each active booking is shown.
 - Cancel an active booking that has not started (soft delete). A "Show cancelled" toggle adds cancelled bookings to the list; the timeline shows active bookings only.
 - Empty days link to the nearest earlier and later days with bookings.
 

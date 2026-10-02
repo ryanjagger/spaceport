@@ -105,6 +105,13 @@
   font-weight: 600;
 }
 
+/* On wide screens the timeline is the view; the list would repeat every block on it. */
+@media (min-width: 761px) {
+  .list:not([data-adds-cancelled]) {
+    display: none;
+  }
+}
+
 /* On narrow screens the grouped list is the view; the timeline needs width to read. */
 @media (max-width: 760px) {
   .timeline {

@@ -150,7 +150,13 @@ export function FleetDashboard() {
             <FleetTimeline ships={ships.data} bookings={active} onOpen={open} />
           </div>
 
-          <section className={styles.list} aria-label="Bookings by ship">
+          {/* Beside the timeline the list only adds the cancelled bookings, which the
+              timeline never draws; without them it is hidden on a wide screen. */}
+          <section
+            className={styles.list}
+            data-adds-cancelled={showCancelled ? '' : undefined}
+            aria-label="Bookings by ship"
+          >
             {ships.data.map((ship) => {
               const forShip = bookings.data.filter((b) => b.shipId === ship.id)
               return (

@@ -152,10 +152,6 @@ export function CharterPage() {
   return (
     <>
       <h1>Charter a ship</h1>
-      <p className={styles.lead}>
-        Welcome, dispatcher. Pick a ship, a start time and a pilot. Every time is spaceport time
-        (CT).
-      </p>
 
       <div className={styles.controls}>
         <label className={ui.field}>
@@ -225,12 +221,7 @@ export function CharterPage() {
             <Skeleton rows={4} label="Loading start times" />
           ) : (
             <>
-              <p className={styles.caption}>
-                The last {formatDurationAdjective(duration)} start is{' '}
-                {formatTime(availability.data.lastStart)}: the spaceport closes at 10:00 PM CT, and
-                each charter needs 30 minutes clear on either side to refuel.
-              </p>
-              {noneOpen && (
+              {noneOpen ? (
                 <div className={styles.noneOpen}>
                   <p>
                     No {formatDurationAdjective(duration)} start times{' '}
@@ -240,6 +231,11 @@ export function CharterPage() {
                     Try the next day
                   </button>
                 </div>
+              ) : (
+                <p className={styles.caption}>
+                  The last {formatDurationAdjective(duration)} start is{' '}
+                  {formatTime(availability.data.lastStart)}; the spaceport closes at 10:00 PM CT.
+                </p>
               )}
               <SlotGrid
                 slots={availability.data.slots}
