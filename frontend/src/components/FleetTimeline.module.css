@@ -98,8 +98,8 @@
   font-size: 0.75rem;
 }
 
-/* A short booking has no room for both lines: drop the times (the axis and the list
-   below carry them) and keep the pilot's name on one line. */
+/* A short booking has no room for both lines: drop the times (the axis and the
+   details it opens carry them) and keep the pilot's name on one line. */
 @container (max-width: 120px) {
   .times {
     display: none;

@@ -123,9 +123,11 @@ export function DayLanes({
         <span>
           <span className={styles.legendRefuel} /> Refuel time, 30 minutes after each charter
         </span>
-        <span>
-          <span className={styles.legendPick} /> Your pick
-        </span>
+        {pick && (
+          <span>
+            <span className={styles.legendPick} /> Your pick
+          </span>
+        )}
         {now && (
           <span>
             <span className={styles.legendNow} /> Now
