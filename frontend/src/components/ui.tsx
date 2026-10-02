@@ -1,3 +1,4 @@
+import { CheckCircleIcon, WarningCircleIcon } from '@phosphor-icons/react'
 import { useEffect, useRef, type ReactNode } from 'react'
 import styles from './ui.module.css'
 
@@ -26,7 +27,13 @@ export function Notice({ notice }: { notice: NoticeMessage | null }) {
     <div role="status" aria-live="polite">
       {notice && (
         <p ref={message} tabIndex={-1} className={`${styles.notice} ${styles[notice.kind]}`}>
-          {notice.text}
+          {/* The icon repeats what the colour says, for anyone who can't tell them apart. */}
+          {notice.kind === 'success' ? (
+            <CheckCircleIcon className={styles.noticeIcon} size={20} weight="fill" aria-hidden />
+          ) : (
+            <WarningCircleIcon className={styles.noticeIcon} size={20} weight="fill" aria-hidden />
+          )}
+          <span>{notice.text}</span>
         </p>
       )}
     </div>

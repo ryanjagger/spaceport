@@ -1,3 +1,4 @@
+import { CalendarBlankIcon, CaretDownIcon, RocketLaunchIcon } from '@phosphor-icons/react'
 import { useRef, useState, type FormEvent } from 'react'
 import { NoResponseError, type Slot } from '../api/client'
 import {
@@ -159,27 +160,38 @@ export function CharterPage() {
       <div className={styles.controls}>
         <label className={ui.field}>
           <span className={ui.label}>Date (Central)</span>
-          <input
-            type="date"
-            className={ui.input}
-            value={date}
-            min={today}
-            onChange={(e) => changeView(() => setDateChoice(e.target.value || null))}
-          />
+          <span className={ui.withIcon}>
+            <input
+              type="date"
+              className={`${ui.input} ${ui.date}`}
+              value={date}
+              min={today}
+              onChange={(e) => changeView(() => setDateChoice(e.target.value || null))}
+            />
+            <CalendarBlankIcon
+              className={`${ui.fieldIcon} ${ui.dateIcon}`}
+              size={16}
+              weight="bold"
+              aria-hidden
+            />
+          </span>
         </label>
         <label className={ui.field}>
           <span className={ui.label}>Duration</span>
-          <select
-            className={ui.input}
-            value={duration}
-            onChange={(e) => changeView(() => setDuration(Number(e.target.value)))}
-          >
-            {DURATIONS.map((minutes) => (
-              <option key={minutes} value={minutes}>
-                {formatDuration(minutes)}
-              </option>
-            ))}
-          </select>
+          <span className={ui.withIcon}>
+            <select
+              className={`${ui.input} ${ui.select}`}
+              value={duration}
+              onChange={(e) => changeView(() => setDuration(Number(e.target.value)))}
+            >
+              {DURATIONS.map((minutes) => (
+                <option key={minutes} value={minutes}>
+                  {formatDuration(minutes)}
+                </option>
+              ))}
+            </select>
+            <CaretDownIcon className={ui.fieldIcon} size={16} weight="bold" aria-hidden />
+          </span>
         </label>
       </div>
 
@@ -302,6 +314,7 @@ export function CharterPage() {
             className={`${ui.button} ${ui.primary} ${styles.book}`}
             disabled={!canBook}
           >
+            <RocketLaunchIcon size={18} weight="bold" aria-hidden />
             {createBooking.isPending ? 'Booking…' : 'Book charter'}
           </button>
         </form>

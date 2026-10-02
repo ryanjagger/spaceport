@@ -24,7 +24,67 @@
   border-color: var(--ink);
 }
 
+/* The browser's own select arrow and calendar button sit hard against the edge and
+   match nothing else, so these fields draw their own icon, inset like the padding. */
+.withIcon {
+  position: relative;
+  display: flex;
+}
+
+.fieldIcon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.select {
+  flex: 1;
+  padding-right: 36px;
+  appearance: none;
+}
+
+.date {
+  flex: 1;
+}
+
+/* Only where the browser's calendar button can be restyled. It stays in place, made
+   invisible and stretched under the drawn icon, so clicking the icon opens the picker.
+   Elsewhere the browser keeps its own button and the drawn one is left out. */
+.dateIcon {
+  display: none;
+}
+
+@supports selector(::-webkit-calendar-picker-indicator) {
+  .date {
+    position: relative;
+    padding-right: 36px;
+  }
+
+  .date::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .dateIcon {
+    display: block;
+  }
+}
+
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   height: 40px;
   padding: 0 16px;
   border: 1px solid var(--line-strong);
@@ -75,6 +135,9 @@
 }
 
 .notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   padding: 10px 14px;
   border: 1px solid;
   border-radius: var(--radius);
@@ -86,14 +149,27 @@
   outline: none;
 }
 
+.noticeIcon {
+  flex: none;
+  margin-top: 1px;
+}
+
 .success {
   border-color: var(--ok);
   background: var(--ok-soft);
 }
 
+.success .noticeIcon {
+  color: var(--ok);
+}
+
 .error {
   border-color: var(--danger);
   background: var(--danger-soft);
+}
+
+.error .noticeIcon {
+  color: var(--danger);
 }
 
 .state {

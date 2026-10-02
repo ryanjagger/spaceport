@@ -1,3 +1,4 @@
+import { CalendarBlankIcon, CaretLeftIcon, CaretRightIcon } from '@phosphor-icons/react'
 import { useRef, useState } from 'react'
 import type { Booking } from '../api/client'
 import { useBookings, useNearestDates, useServerNow, useShips } from '../api/hooks'
@@ -69,19 +70,29 @@ export function FleetDashboard() {
 
       <div className={styles.controls}>
         <button type="button" className={ui.button} onClick={() => goTo(addDays(date, -1))}>
+          <CaretLeftIcon size={16} weight="bold" aria-hidden />
           Previous day
         </button>
         <label className={ui.field}>
           <span className={ui.visuallyHidden}>Date (Central)</span>
-          <input
-            type="date"
-            className={ui.input}
-            value={date}
-            onChange={(e) => goTo(e.target.value || null)}
-          />
+          <span className={ui.withIcon}>
+            <input
+              type="date"
+              className={`${ui.input} ${ui.date}`}
+              value={date}
+              onChange={(e) => goTo(e.target.value || null)}
+            />
+            <CalendarBlankIcon
+              className={`${ui.fieldIcon} ${ui.dateIcon}`}
+              size={16}
+              weight="bold"
+              aria-hidden
+            />
+          </span>
         </label>
         <button type="button" className={ui.button} onClick={() => goTo(addDays(date, 1))}>
           Next day
+          <CaretRightIcon size={16} weight="bold" aria-hidden />
         </button>
         <button
           type="button"
@@ -120,6 +131,7 @@ export function FleetDashboard() {
             disabled={!nearest.data?.previous}
             onClick={() => jumpTo(nearest.data!.previous)}
           >
+            <CaretLeftIcon size={16} weight="bold" aria-hidden />
             Previous day with bookings
           </button>
           <button
@@ -129,6 +141,7 @@ export function FleetDashboard() {
             onClick={() => jumpTo(nearest.data!.next)}
           >
             Next day with bookings
+            <CaretRightIcon size={16} weight="bold" aria-hidden />
           </button>
         </EmptyState>
       ) : (
@@ -154,13 +167,17 @@ export function FleetDashboard() {
                             className={styles.entry}
                             onClick={(e) => open(booking, e.currentTarget)}
                           >
-                            <span className={styles.entryTimes}>
-                              {formatRange(booking.startTime, booking.endTime)}
+                            <span className={styles.entryText}>
+                              <span className={styles.entryTimes}>
+                                {formatRange(booking.startTime, booking.endTime)}
+                              </span>
+                              <span>{booking.pilotName}</span>
+                              {booking.status === 'cancelled' && (
+                                <span className={styles.cancelled}>Cancelled</span>
+                              )}
                             </span>
-                            <span>{booking.pilotName}</span>
-                            {booking.status === 'cancelled' && (
-                              <span className={styles.cancelled}>Cancelled</span>
-                            )}
+                            {/* Says the row opens something, which plain text rows don't. */}
+                            <CaretRightIcon className={styles.entryCaret} size={16} aria-hidden />
                           </button>
                         </li>
                       ))}

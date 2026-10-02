@@ -318,8 +318,16 @@ A white top bar with a hairline beneath. Tabs are body text at weight 500, muted
 - **Internal Padding:** 20px for a panel, 24px for the dialog and empty states. The day lanes card has no padding; its rows run edge to edge with a 16px inset.
 
 ### Notices and state cards
-- **Notice:** 6px radius, 10px by 14px padding, weight 500, a 1px border in the state colour over its soft tint: green for success, red for error. Ink text.
+- **Notice:** 6px radius, 10px by 14px padding, weight 500, a 1px border in the state colour over its soft tint: green for success, red for error. Ink text, led by a 20px filled icon in the state colour (check circle for success, warning circle for error).
 - **Empty, error and loading:** a white card with a dashed control-edge border, a weight 600 title, and actions as secondary buttons. Loading is a stack of 44px bars with a slow hairline-to-ground shimmer.
+
+### Icons
+Phosphor (`@phosphor-icons/react`), imported one icon at a time. Icons support text; they never replace it, and every icon is `aria-hidden` beside a visible label.
+- **Carets (16px):** bold weight inside buttons that move between days, on the side the day moves towards; regular weight in muted at the end of a list row that opens details.
+- **Notice icons (20px):** fill weight, in the notice's state colour.
+- **Field icons (16px):** bold weight in muted, 12px from the right edge: a caret on the Duration select and a calendar on date fields, replacing the browser's own (where the browser allows it).
+- **Primary action (18px):** a bold rocket-launch icon leads the "Book charter" label.
+- **Not used on:** start times, day lanes, nav tabs or legends. Those stay text and colour.
 
 ### Pills
 Fully round, caption size at weight 600. "Today" is indigo ink on indigo wash; "Cancelled" is red on its soft tint.
@@ -349,6 +357,7 @@ A native dialog, at most 460px wide, 24px padding, 10px radius, hairline border 
 - **Do** keep controls at 40px on a desk and 44px at 860px and below, with input text at 16px there.
 - **Do** keep transitions to 120ms ease-out on background and border, and leave them covered by the reduced-motion rule.
 - **Do** write labels in sentence case at weights 400, 500 or 600.
+- **Do** take icons from Phosphor only, at 16px in controls and 20px in notices, always beside a text label.
 
 ### Don't:
 - **Don't** use solid indigo for a booking, or indigo tint for anything that is not booked or the selected row.
@@ -356,5 +365,6 @@ A native dialog, at most 460px wide, 24px padding, 10px radius, hairline border 
 - **Don't** give amber, grey, green or red a second meaning.
 - **Don't** put a shadow on anything in the page flow; shadows belong to the dialog and the pinned mobile bar.
 - **Don't** add a second accent hue or a second typeface.
+- **Don't** use Unicode arrows or emoji as icons, or an icon without a label.
 - **Don't** add a themed space motif. The category standard was chosen deliberately.
 - **Don't** hide the reason a time is unavailable behind a tooltip; it is visible text on the control.
