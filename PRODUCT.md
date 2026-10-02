@@ -79,7 +79,7 @@ Carried over from SPACEPORT-PRD.md and BRIEF.md, not reconfirmed in the init int
 
 - `data/seed.json`: five ships and 3,000 seed bookings, generated from the unmodified `seed.py`.
 - Live demo: <https://app-production-a9d8.up.railway.app>.
-- `BRIEF.md` (original brief), `SPACEPORT-PRD.md` (full design), `PLAN.md` (build log).
+- `docs/BRIEF.md` (original brief), `docs/SPACEPORT-PRD.md` (full design), `docs/PLAN.md` (build log).
 - No real customers, testimonials, usage numbers or imagery. Future work must not invent them.
 
 ## Product Principles
