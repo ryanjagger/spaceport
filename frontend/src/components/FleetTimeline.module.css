@@ -1,0 +1,143 @@
+.timeline {
+  --name-width: 150px;
+  padding: 16px 20px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.axis {
+  position: relative;
+  height: 22px;
+  margin-left: var(--name-width);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.axis span {
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.axis span:first-child {
+  transform: none;
+}
+
+.axis span:last-child {
+  transform: translateX(-100%);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--name-width) minmax(0, 1fr);
+  align-items: center;
+  border-top: 1px solid var(--line);
+}
+
+.ship {
+  padding-right: 12px;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* One vertical rule per hour, 16 hours across. */
+.track {
+  position: relative;
+  height: 56px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--line) 0 1px,
+    transparent 1px calc(100% / 16)
+  );
+  border-right: 1px solid var(--line);
+}
+
+.block {
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6px;
+  border: 0;
+  border-left: 4px solid var(--ink);
+  border-radius: 3px;
+  background: var(--orbit);
+  color: var(--surface);
+  text-align: left;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.block:hover {
+  background: #1a3690;
+}
+
+.block:focus-visible {
+  outline-color: var(--signal);
+  z-index: 1;
+}
+
+.pilot,
+.times {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.pilot {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.times {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  opacity: 0.9;
+}
+
+.refuel,
+.legendRefuel {
+  background: repeating-linear-gradient(-45deg, var(--signal-soft) 0 4px, var(--signal) 4px 6px);
+}
+
+.refuel {
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  border-radius: 0 3px 3px 0;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.legendBlock,
+.legendRefuel {
+  width: 22px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.legendBlock {
+  background: var(--orbit);
+}
+
+.legendRefuel {
+  margin-left: 14px;
+}
