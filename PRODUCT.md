@@ -69,10 +69,11 @@ Carried over from SPACEPORT-PRD.md and BRIEF.md, not reconfirmed in the init int
 
 ## Brand Commitments
 
-- Name: Spaceport Charter System, for the Pacific Spaceport.
+- Name shown in the product: Pacific Spaceport, in the top bar, tab titles and favicon. The brief calls the system the Spaceport Charter System.
+- Logo: the owner's rocket mark, redrawn flat in one colour (`frontend/src/components/Logo.tsx`, `frontend/public/favicon.svg`).
 - Voice in the brief: plain and lightly wry ("Welcome, dispatcher").
 - Visual direction (chosen 2026-10-01): the category standard for a scheduling tool, played straight, at the craft level of Linear and the Stripe Dashboard. No themed world. `DESIGN.md` records the system; it replaced the first-pass navy and amber look.
-- No logo or other identity assets exist.
+- No other identity assets exist.
 
 ## Evidence on Hand
 

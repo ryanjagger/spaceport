@@ -1,5 +1,5 @@
 ---
-name: Spaceport Charter System
+name: Pacific Spaceport
 description: A bright, quiet booking desk for five charter ships, where colour only ever means a state.
 colors:
   accent: "#4b4fd9"
@@ -182,7 +182,7 @@ components:
     padding: "1px 8px"
 ---
 
-# Design System: Spaceport Charter System
+# Design System: Pacific Spaceport
 
 ## Overview
 
@@ -268,7 +268,7 @@ Timelines share one model: a name column, then a track divided by one hairline r
 Responsive behaviour:
 - **At 860px and below** the charter columns stack, and the "Your charter" panel becomes a bar pinned to the bottom edge, full bleed, showing the pick on one line with the pilot field and Book button beside each other. Controls grow to 44px and input text to 16px so phones do not zoom.
 - **At 760px and below** each ship's name sits above its own lane, every other axis tick is hidden, and tracks shorten from 48px to 36px. On the fleet dashboard the timeline is hidden and the grouped list is the view.
-- **At 640px and below** the nav tabs wrap to their own row under the brand and clock, and the "Charter desk" descriptor is dropped.
+- **At 760px and below** the nav tabs wrap to their own row under the brand and clock. **At 420px and below** the "Spaceport time" label is hidden visually (kept for screen readers) and the time stands alone.
 
 Touch targets are at least 44px tall for nav tabs, list entries and toggles; start-time buttons are 48px.
 
@@ -308,7 +308,7 @@ Quiet and square-shouldered; the primary is the only solid thing on the page unt
 - **Narrow screens:** 44px tall with 16px text.
 
 ### Navigation
-A white top bar with a hairline beneath. Tabs are body text at weight 500, muted, 44px tall with 12px side padding. Hover turns the text to ink; the active tab is ink with a 2px indigo underline. The brand is weight 600 with a muted descriptor beside it. The clock at the far right is a muted label followed by the time in ink at weight 600.
+A white top bar with a hairline beneath. Tabs are body text at weight 500, muted, 44px tall with 12px side padding. Hover turns the text to ink; the active tab is ink with a 2px indigo underline. The brand is the rocket mark at 20px in indigo, an 8px gap, then "Pacific Spaceport" in ink at weight 600; together they are a link home. The clock at the far right is a muted label followed by the time in ink at weight 600, in a `time` element; its width is held while loading and it reads "Spaceport time unavailable" if the request fails.
 
 ### Cards / Containers
 - **Corner Style:** 10px.
@@ -320,6 +320,9 @@ A white top bar with a hairline beneath. Tabs are body text at weight 500, muted
 ### Notices and state cards
 - **Notice:** 6px radius, 10px by 14px padding, weight 500, a 1px border in the state colour over its soft tint: green for success, red for error. Ink text, led by a 20px filled icon in the state colour (check circle for success, warning circle for error).
 - **Empty, error and loading:** a white card with a dashed control-edge border, a weight 600 title, and actions as secondary buttons. Loading is a stack of 44px bars with a slow hairline-to-ground shimmer.
+
+### Logo
+The owner's rocket, redrawn flat: nose, body with fins and three exhaust bars, one solid colour, no gradients or transparency. In the bar it is indigo at 20px (`Logo.tsx`, which takes the surrounding text colour unless told otherwise). The favicon is the same drawing in white on an indigo rounded square. It is the only space imagery in the interface besides the rocket-launch icon on "Book charter".
 
 ### Icons
 Phosphor (`@phosphor-icons/react`), imported one icon at a time. Icons support text; they never replace it, and every icon is `aria-hidden` beside a visible label.
@@ -366,5 +369,5 @@ A native dialog, at most 460px wide, 24px padding, 10px radius, hairline border 
 - **Don't** put a shadow on anything in the page flow; shadows belong to the dialog and the pinned mobile bar.
 - **Don't** add a second accent hue or a second typeface.
 - **Don't** use Unicode arrows or emoji as icons, or an icon without a label.
-- **Don't** add a themed space motif. The category standard was chosen deliberately.
+- **Don't** add a themed space motif beyond the logo and the "Book charter" icon. The category standard was chosen deliberately.
 - **Don't** hide the reason a time is unavailable behind a tooltip; it is visible text on the control.
