@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16.15-bookworm
+    environment:
+      POSTGRES_USER: spaceport
+      POSTGRES_PASSWORD: spaceport
+      POSTGRES_DB: spaceport
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/create-test-db.sql:/docker-entrypoint-initdb.d/create-test-db.sql:ro
+    ports:
+      # For local development outside Docker. 5433 avoids a Postgres already on the host.
+      - "5433:5432"
+    healthcheck:
+      # Over TCP: the server only listens there once the init scripts have finished.
+      test: ["CMD-SHELL", "pg_isready -h localhost -U spaceport -d spaceport"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  app:
+    build:
+      context: .
+      target: runtime
+    environment:
+      DATABASE_URL: postgresql://spaceport:spaceport@db:5432/spaceport
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  test:
+    profiles: ["test"]
+    build:
+      context: .
+      target: test
+    environment:
+      DATABASE_URL: postgresql://spaceport:spaceport@db:5432/spaceport
+      TEST_DATABASE_URL: postgresql://spaceport:spaceport@db:5432/spaceport_test
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
