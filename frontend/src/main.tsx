@@ -1,9 +1,6 @@
-import '@fontsource/barlow-condensed/600.css'
-import '@fontsource/ibm-plex-mono/400.css'
-import '@fontsource/ibm-plex-mono/500.css'
-import '@fontsource/ibm-plex-sans/400.css'
-import '@fontsource/ibm-plex-sans/500.css'
-import '@fontsource/ibm-plex-sans/600.css'
+// One variable file covers every weight and Latin Extended, for free-text pilot
+// names (Łukasz, Şebnem).
+import '@fontsource-variable/inter/wght.css'
 import './styles/global.css'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'

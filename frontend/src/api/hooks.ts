@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query'
 import { centralDate } from '../lib/time'
 import { api, type Booking } from './client'
 
@@ -18,26 +18,31 @@ export function useShips() {
   return useQuery({ queryKey: ['ships'], queryFn: api.ships, staleTime: 5 * MINUTE })
 }
 
-export function useAvailability(
-  shipId: number | null,
+/** One availability answer per ship, so the whole fleet's open times can be compared. */
+export function useFleetAvailability(
+  shipIds: number[],
   date: string | null,
   duration: number,
   isToday: boolean,
 ) {
-  return useQuery({
-    queryKey: ['availability', shipId, date, duration],
-    queryFn: () => api.availability(shipId!, date!, duration),
-    enabled: shipId !== null && date !== null,
-    // Today's slots go stale as time passes; other days only change when someone books.
-    refetchInterval: isToday ? MINUTE : false,
+  return useQueries({
+    queries: shipIds.map((shipId) => ({
+      queryKey: ['availability', shipId, date, duration],
+      queryFn: () => api.availability(shipId, date!, duration),
+      enabled: date !== null,
+      // Today's slots go stale as time passes; other days only change when someone books.
+      refetchInterval: isToday ? MINUTE : (false as const),
+    })),
   })
 }
 
-export function useBookings(date: string | null, includeCancelled: boolean) {
+export function useBookings(date: string | null, includeCancelled: boolean, live = false) {
   return useQuery({
     queryKey: ['bookings', date, date, includeCancelled],
     queryFn: () => api.bookings(date!, includeCancelled),
     enabled: date !== null,
+    // Kept in step with availability where the two are drawn side by side.
+    refetchInterval: live ? MINUTE : false,
   })
 }
 

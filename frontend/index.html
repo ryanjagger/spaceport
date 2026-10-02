@@ -3,7 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pacific Spaceport · Charter desk</title>
+    <title>Pacific Spaceport</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Everything the first screen waits for, asked for alongside the script instead of
+         after it: the one font file English text needs, and the two answers every screen
+         starts from. The app's own fetches pick these responses up. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2"
+    />
+    <link rel="preload" as="fetch" crossorigin href="/api/time" />
+    <link rel="preload" as="fetch" crossorigin href="/api/ships" />
   </head>
   <body>
     <div id="root"></div>

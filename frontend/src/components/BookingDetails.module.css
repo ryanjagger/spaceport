@@ -1,14 +1,15 @@
 .dialog {
   width: min(460px, calc(100vw - 32px));
   padding: 24px;
-  border: 1px solid var(--ink);
-  border-top: 6px solid var(--signal);
-  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
   color: var(--ink);
+  box-shadow: var(--shadow-overlay);
 }
 
 .dialog::backdrop {
-  background: rgb(18 32 58 / 55%);
+  background: color-mix(in srgb, var(--ink) 45%, transparent);
 }
 
 .facts {
@@ -16,16 +17,21 @@
   grid-template-columns: auto 1fr;
   gap: 8px 20px;
   margin: 16px 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
 }
 
 .facts dt {
   color: var(--muted);
-  font-size: 0.85rem;
 }
 
 .facts dd {
   margin: 0;
   font-weight: 500;
+}
+
+.reason {
+  color: var(--muted);
 }
 
 .actions {

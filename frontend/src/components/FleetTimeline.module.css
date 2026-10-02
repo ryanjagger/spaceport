@@ -2,7 +2,7 @@
   --name-width: 150px;
   padding: 16px 20px 14px;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: var(--surface);
 }
 
@@ -10,8 +10,7 @@
   position: relative;
   height: 22px;
   margin-left: var(--name-width);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--muted);
 }
 
@@ -38,11 +37,7 @@
 
 .ship {
   padding-right: 12px;
-  font-family: var(--font-display);
-  font-size: 1.05rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
 }
 
 /* One vertical rule per hour, 16 hours across. */
@@ -66,21 +61,23 @@
   justify-content: center;
   padding: 0 6px;
   border: 0;
-  border-left: 4px solid var(--ink);
-  border-radius: 3px;
-  background: var(--orbit);
-  color: var(--surface);
+  border-radius: 4px;
+  /* The tint means booked on both screens; solid indigo is kept for a selection. */
+  background: var(--accent-fill);
+  color: var(--accent-ink);
   text-align: left;
   overflow: hidden;
   cursor: pointer;
+  /* Lets the label below adapt to the block's own width, i.e. the booking's length. */
+  container-type: inline-size;
 }
 
 .block:hover {
-  background: #1a3690;
+  background: color-mix(in srgb, var(--accent-fill) 82%, var(--accent));
 }
 
 .block:focus-visible {
-  outline-color: var(--signal);
+  outline-color: var(--ink);
   z-index: 1;
 }
 
@@ -93,26 +90,32 @@
 }
 
 .pilot {
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   font-weight: 600;
 }
 
 .times {
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  opacity: 0.9;
+  font-size: 0.75rem;
+}
+
+/* A short booking has no room for both lines: drop the times (the axis and the list
+   below carry them) and keep the pilot's name on one line. */
+@container (max-width: 120px) {
+  .times {
+    display: none;
+  }
 }
 
 .refuel,
 .legendRefuel {
-  background: repeating-linear-gradient(-45deg, var(--signal-soft) 0 4px, var(--signal) 4px 6px);
+  background: var(--refuel-fill);
 }
 
 .refuel {
   position: absolute;
   top: 7px;
   bottom: 7px;
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 4px 4px 0;
 }
 
 .legend {
@@ -123,7 +126,7 @@
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px solid var(--line);
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   color: var(--muted);
 }
 
@@ -135,7 +138,7 @@
 }
 
 .legendBlock {
-  background: var(--orbit);
+  background: var(--accent-fill);
 }
 
 .legendRefuel {

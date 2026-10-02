@@ -28,6 +28,21 @@ def test_static_files_are_served(client: TestClient):
     assert "console.log" in response.text
 
 
+def test_hashed_assets_are_cached_for_good_and_the_page_is_not(client: TestClient):
+    assert "immutable" in client.get("/assets/app.js").headers["cache-control"]
+    # index.html names the current hashed files, so it must be revalidated every time,
+    # including when it stands in for an asset that no longer exists.
+    for path in ("/", "/fleet", "/assets/missing.js"):
+        assert client.get(path).headers["cache-control"] == "no-cache", path
+
+
+def test_large_responses_are_compressed(client: TestClient, tmp_path: Path):
+    (tmp_path / "assets" / "big.js").write_text("console.log('app')\n" * 500)
+    response = client.get("/assets/big.js", headers={"Accept-Encoding": "gzip"})
+    assert response.headers["content-encoding"] == "gzip"
+    assert response.text.startswith("console.log")
+
+
 def test_client_side_routes_fall_back_to_index(client: TestClient):
     for path in ("/fleet", "/fleet/anything", "/assets/missing.js"):
         response = client.get(path)

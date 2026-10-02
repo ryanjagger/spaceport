@@ -6,39 +6,98 @@
 }
 
 .label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.8125rem;
+  font-weight: 500;
   color: var(--muted);
 }
 
 .input {
-  height: 44px;
+  height: 40px;
   padding: 0 12px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   background: var(--surface);
   min-width: 0;
 }
 
 .input:hover {
-  border-color: var(--muted);
+  border-color: var(--ink);
+}
+
+/* The browser's own select arrow and calendar button sit hard against the edge and
+   match nothing else, so these fields draw their own icon, inset like the padding. */
+.withIcon {
+  position: relative;
+  display: flex;
+}
+
+.fieldIcon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.select {
+  flex: 1;
+  padding-right: 36px;
+  appearance: none;
+}
+
+.date {
+  flex: 1;
+}
+
+/* Only where the browser's calendar button can be restyled. It stays in place, made
+   invisible and stretched under the drawn icon, so clicking the icon opens the picker.
+   Elsewhere the browser keeps its own button and the drawn one is left out. */
+.dateIcon {
+  display: none;
+}
+
+@supports selector(::-webkit-calendar-picker-indicator) {
+  .date {
+    position: relative;
+    padding-right: 36px;
+  }
+
+  .date::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .dateIcon {
+    display: block;
+  }
 }
 
 .button {
-  height: 44px;
-  padding: 0 18px;
-  border: 1px solid var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   background: var(--surface);
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
+  transition: background 120ms ease-out;
 }
 
 .button:hover:not(:disabled) {
-  background: var(--paper);
+  background: var(--ground);
 }
 
 .button:disabled {
@@ -48,16 +107,21 @@
 }
 
 .primary {
-  background: var(--ink);
+  border-color: var(--accent);
+  background: var(--accent);
   color: var(--surface);
 }
 
 .primary:hover:not(:disabled) {
-  background: #1f335c;
+  border-color: var(--accent-hover);
+  background: var(--accent-hover);
 }
 
+/* Still reads as the button it will become: 4.5:1 text on a quiet fill. */
 .primary:disabled {
-  background: var(--line);
+  border-color: var(--line);
+  background: var(--past-soft);
+  color: var(--muted);
 }
 
 .danger {
@@ -67,14 +131,27 @@
 }
 
 .danger:hover:not(:disabled) {
-  background: #8a1c16;
+  background: var(--danger-hover);
 }
 
 .notice {
-  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid;
   border-radius: var(--radius);
-  border-left: 6px solid;
   font-weight: 500;
+}
+
+/* Focused by script as a place to continue from, not as a control: no ring. */
+.notice:focus {
+  outline: none;
+}
+
+.noticeIcon {
+  flex: none;
+  margin-top: 1px;
 }
 
 .success {
@@ -82,9 +159,17 @@
   background: var(--ok-soft);
 }
 
+.success .noticeIcon {
+  color: var(--ok);
+}
+
 .error {
   border-color: var(--danger);
   background: var(--danger-soft);
+}
+
+.error .noticeIcon {
+  color: var(--danger);
 }
 
 .state {
@@ -93,8 +178,8 @@
   align-items: flex-start;
   gap: 12px;
   padding: 24px;
-  border: 1px dashed var(--line);
-  border-radius: var(--radius);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
   background: var(--surface);
 }
 
@@ -114,9 +199,9 @@
 }
 
 .skeletonBar {
-  height: 48px;
+  height: 44px;
   border-radius: var(--radius);
-  background: linear-gradient(90deg, #dbe2ea 25%, #eef2f6 50%, #dbe2ea 75%);
+  background: linear-gradient(90deg, var(--line) 25%, var(--ground) 50%, var(--line) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
 }
@@ -134,4 +219,16 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Phones zoom the page when a focused field's text is under 16px. */
+@media (max-width: 860px) {
+  .input {
+    font-size: 1rem;
+  }
+
+  .input,
+  .button {
+    height: 44px;
+  }
 }

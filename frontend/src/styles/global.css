@@ -1,24 +1,35 @@
 :root {
-  /* Apron at first light: cool paper, navy ink, runway-marking amber. */
-  --paper: #e9eef3;
+  /* A bright office at a desk: white surfaces on a cool grey ground, one indigo accent. */
+  --ground: #f6f7f9;
   --surface: #ffffff;
-  --ink: #12203a;
-  --muted: #55627a;
-  --line: #c8d2de;
-  --signal: #f5b301;
-  --signal-soft: #fff3cc;
-  --orbit: #2448b8;
-  --orbit-soft: #dce5fb;
-  --danger: #a8231c;
-  --danger-soft: #fbe6e4;
-  --ok: #17663f;
-  --ok-soft: #dff3e8;
+  --ink: #1a1f2c;
+  --muted: #5c6577;
+  --line: #e1e4ea;
+  /* Edges of things you type into or click: 3:1 or better against ground and surface. */
+  --line-strong: #858e9f;
 
-  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
-  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --accent: #4b4fd9;
+  --accent-hover: #3d40bf;
+  --accent-soft: #ecedfd;
+  --accent-fill: #c5c8f6;
+  --accent-ink: #3033a3;
+
+  /* State colours always travel with a text label. */
+  --refuel: #8a4708;
+  --refuel-soft: #fdf1d8;
+  --refuel-fill: #f3cd7c;
+  --past-soft: #eef0f3;
+  --danger: #b42318;
+  --danger-hover: #912018;
+  --danger-soft: #feecea;
+  --ok: #16703f;
+  --ok-soft: #e5f5ec;
+
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --radius: 6px;
+  --radius-lg: 10px;
+  --shadow-overlay: 0 12px 32px -8px rgb(26 31 44 / 0.22), 0 2px 6px -2px rgb(26 31 44 / 0.12);
   --gutter: clamp(16px, 4vw, 40px);
 }
 
@@ -30,30 +41,44 @@
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--ground);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.45;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  /* Times line up in columns and never shift width as they change. */
+  font-variant-numeric: tabular-nums;
+  accent-color: var(--accent);
+  caret-color: var(--accent);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent-fill);
+  color: var(--ink);
 }
 
 h1,
 h2,
 h3 {
   margin: 0;
-  font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  line-height: 1.05;
+  line-height: 1.25;
+  text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-size: 1.5rem;
+  letter-spacing: -0.015em;
 }
 
 h2 {
-  font-size: 1.35rem;
+  font-size: 1.0625rem;
+  letter-spacing: -0.005em;
+}
+
+h3 {
+  font-size: 0.875rem;
 }
 
 p {
@@ -68,8 +93,13 @@ select {
 }
 
 :focus-visible {
-  outline: 3px solid var(--orbit);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* A heading focused by script is a place to carry on from, not a control: no ring. */
+h2[tabindex='-1']:focus {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

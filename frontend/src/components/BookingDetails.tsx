@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NoResponseError, type Booking, type Ship } from '../api/client'
 import { bookingDate, useCancelBooking, useRefreshSchedule } from '../api/hooks'
-import { formatDate, formatTimeWithHint, isAfter } from '../lib/time'
+import { formatDate, formatDateTime, formatTimeWithHint, isAfter } from '../lib/time'
 import styles from './BookingDetails.module.css'
 import { errorMessage, ui } from './ui'
 
@@ -76,17 +76,33 @@ export function BookingDetails({ booking, ship, serverNow, onClose, onCancelled 
             ? 'Cancelled'
             : canCancel
               ? 'Upcoming'
-              : 'Started or finished'}
+              : isAfter(booking.endTime, serverNow)
+                ? 'Under way'
+                : 'Completed'}
         </dd>
+        {booking.cancelledAt && (
+          <>
+            <dt>Cancelled</dt>
+            <dd>{formatDateTime(booking.cancelledAt)}</dd>
+          </>
+        )}
       </dl>
 
       <div role="status" aria-live="polite">
         {error && <p className={`${ui.notice} ${ui.error}`}>{error}</p>}
       </div>
 
+      {/* A missing Cancel button always comes with its reason. */}
+      {booking.status === 'active' && !canCancel && (
+        <p className={styles.reason}>
+          This charter has already departed, so it can't be cancelled.
+        </p>
+      )}
+
       <div className={styles.actions}>
         {canCancel && !confirming && (
-          // autoFocus on this pair keeps keyboard focus on the step that replaces the last one.
+          // autoFocus keeps keyboard focus on the step that replaces the last one. In the
+          // confirm step it lands on the safe choice, so pressing Enter twice can't cancel.
           <button type="button" className={ui.button} autoFocus onClick={() => setConfirming(true)}>
             Cancel booking
           </button>
@@ -97,7 +113,6 @@ export function BookingDetails({ booking, ship, serverNow, onClose, onCancelled 
             <button
               type="button"
               className={`${ui.button} ${ui.danger}`}
-              autoFocus
               disabled={cancelBooking.isPending}
               onClick={cancel}
             >
@@ -106,6 +121,7 @@ export function BookingDetails({ booking, ship, serverNow, onClose, onCancelled 
             <button
               type="button"
               className={ui.button}
+              autoFocus
               disabled={cancelBooking.isPending}
               onClick={() => setConfirming(false)}
             >

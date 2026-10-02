@@ -64,7 +64,7 @@ export function FleetTimeline({ ships, bookings, onOpen }: Props) {
       ))}
       <p className={styles.legend}>
         <span className={styles.legendBlock} /> Booked
-        <span className={styles.legendRefuel} /> Refuel, 30 minutes after each charter
+        <span className={styles.legendRefuel} /> Refuel time, 30 minutes after each charter
       </p>
     </div>
   )
