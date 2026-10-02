@@ -33,3 +33,6 @@ CREATE TABLE IF NOT EXISTS bookings (
     ) WITH &&
   ) WHERE (status = 'active')
 );
+
+-- The bookings list and nearest-dates look bookings up by start time across the fleet.
+CREATE INDEX IF NOT EXISTS bookings_start_time_idx ON bookings (start_time);

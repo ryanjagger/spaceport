@@ -1,11 +1,15 @@
 """The database's own rules, tested with direct SQL: no API, no service layer."""
 
+from datetime import timedelta
+
 import pytest
 from sqlalchemy import Engine, inspect, text
 from sqlalchemy.exc import IntegrityError
 
+from app import rules
 from app.init_db import (
     CONSTRAINT_NAME,
+    EXPECTED_CONSTRAINT_DEF,
     SchemaMismatchError,
     apply_schema,
     drop_tables,
@@ -58,6 +62,16 @@ def test_exclusion_constraint_exists(db: Engine):
             {"name": CONSTRAINT_NAME},
         ).scalar_one()
     assert contype == "x"  # exclusion constraint
+
+
+def test_start_time_index_exists(db: Engine):
+    indexes = {index["name"]: index for index in inspect(db).get_indexes("bookings")}
+    assert indexes["bookings_start_time_idx"]["column_names"] == ["start_time"]
+
+
+def test_expected_constraint_uses_the_rules_buffer():
+    assert rules.REFUEL_BUFFER == timedelta(minutes=30)
+    assert "'00:30:00'::interval" in EXPECTED_CONSTRAINT_DEF
 
 
 @pytest.mark.parametrize("tz", SESSION_TIMEZONES)

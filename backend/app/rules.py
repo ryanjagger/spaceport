@@ -17,7 +17,7 @@ CLOSING = time(22, 0)
 GRID = timedelta(minutes=30)
 MIN_DURATION = timedelta(minutes=30)
 MAX_DURATION = timedelta(hours=8)
-# schema.sql hard-codes the same 30 minutes; init_db.py checks the two agree.
+# schema.sql hard-codes the same 30 minutes; init_db.py refuses to start if they differ.
 REFUEL_BUFFER = timedelta(minutes=30)
 
 

@@ -7,9 +7,11 @@ python -m app.init_db --reset    # drop the tables first (destroys all bookings)
 import argparse
 import logging
 import sys
+from datetime import timedelta
 
 from sqlalchemy import Engine, text
 
+from app import rules
 from app.config import SCHEMA_FILE, get_settings
 from app.db import get_engine
 
@@ -17,13 +19,23 @@ log = logging.getLogger("spaceport.init_db")
 
 CONSTRAINT_NAME = "no_overlap_with_buffer"
 
+
+def _pg_interval(delta: timedelta) -> str:
+    """A sub-day interval the way Postgres prints it: 30 minutes is 00:30:00."""
+    minutes, seconds = divmod(int(delta.total_seconds()), 60)
+    hours, minutes = divmod(minutes, 60)
+    return f"{hours:02}:{minutes:02}:{seconds:02}"
+
+
 # What pg_get_constraintdef returns for the constraint in schema.sql (Postgres 16).
 # schema.sql is IF NOT EXISTS, so an edited constraint is silently skipped on an
-# existing database; comparing the full definition catches that, and a changed buffer.
+# existing database; comparing the full definition catches that. The buffer comes
+# from rules.py, so this also fails if schema.sql and the rules stop agreeing.
 EXPECTED_CONSTRAINT_DEF = (
     "EXCLUDE USING gist (ship_id WITH =, "
     "tsrange((start_time AT TIME ZONE 'UTC'::text), "
-    "((end_time AT TIME ZONE 'UTC'::text) + '00:30:00'::interval), '[)'::text) WITH &&) "
+    f"((end_time AT TIME ZONE 'UTC'::text) + '{_pg_interval(rules.REFUEL_BUFFER)}'::interval), "
+    "'[)'::text) WITH &&) "
     "WHERE ((status = 'active'::text))"
 )
 
