@@ -61,12 +61,25 @@ def _on_grid(moment: datetime) -> bool:
     return moment.minute in (0, 30) and moment.second == 0 and moment.microsecond == 0
 
 
+def _invalid_duration() -> RuleViolation:
+    return RuleViolation(
+        "invalid_duration", "A charter lasts 30 minutes to 8 hours, in 30-minute steps."
+    )
+
+
 def check_duration(duration: timedelta) -> None:
     """R5: 30 minutes to 8 hours, in 30-minute steps."""
     if not MIN_DURATION <= duration <= MAX_DURATION or duration % GRID:
-        raise RuleViolation(
-            "invalid_duration", "A charter lasts 30 minutes to 8 hours, in 30-minute steps."
-        )
+        raise _invalid_duration()
+
+
+def duration_of(minutes: int) -> timedelta:
+    """R5 from a minute count. Checked as an int first: timedelta overflows on huge values."""
+    if not 0 < minutes <= MAX_DURATION // timedelta(minutes=1):
+        raise _invalid_duration()
+    duration = timedelta(minutes=minutes)
+    check_duration(duration)
+    return duration
 
 
 def check_interval(start: datetime, end: datetime) -> None:

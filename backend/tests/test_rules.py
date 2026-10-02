@@ -226,6 +226,14 @@ class TestSlots:
             with pytest.raises(RuleViolation):
                 rules.day_slots(DAY, timedelta(minutes=minutes))
 
+    def test_duration_of_minutes(self):
+        assert rules.duration_of(30) == timedelta(minutes=30)
+        assert rules.duration_of(480) == timedelta(hours=8)
+        for minutes in (0, -30, 45, 510, 10**20, -(10**20)):
+            with pytest.raises(RuleViolation) as exc:
+                rules.duration_of(minutes)
+            assert exc.value.code == "invalid_duration"
+
     def test_day_bounds_follow_central_midnight_across_dst(self):
         start, end = rules.day_bounds(date(2026, 11, 1))
         assert start == datetime(2026, 11, 1, 5, tzinfo=UTC)
