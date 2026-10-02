@@ -2,7 +2,7 @@
 
 A two-screen booking app for the Pacific Spaceport's five charter ships. Dispatchers book a ship for a time slot; a fleet manager sees every booking by ship and can cancel upcoming ones.
 
-The original brief is in [BRIEF.md](BRIEF.md), the full design in [SPACEPORT-PRD.md](SPACEPORT-PRD.md), and the build log in [PLAN.md](PLAN.md).
+The original brief is in [BRIEF.md](docs/BRIEF.md), the full design in [SPACEPORT-PRD.md](docs/SPACEPORT-PRD.md), and the build log in [PLAN.md](docs/PLAN.md).
 
 ## Run it
 
