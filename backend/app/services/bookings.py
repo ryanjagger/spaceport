@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from sqlalchemy import func, select, text, update
 from sqlalchemy.exc import IntegrityError
@@ -16,10 +16,11 @@ EXCLUSION_VIOLATION = "23P01"
 # The same expression as the no_overlap_with_buffer constraint in schema.sql.
 CONFLICTS_WITH_CANDIDATE = text(
     "tsrange(start_time AT TIME ZONE 'UTC', "
-    "(end_time AT TIME ZONE 'UTC') + interval '30 minutes', '[)') "
+    "(end_time AT TIME ZONE 'UTC') + CAST(:buffer AS interval), '[)') "
     "&& tsrange(CAST(:start AS timestamptz) AT TIME ZONE 'UTC', "
-    "(CAST(:end AS timestamptz) AT TIME ZONE 'UTC') + interval '30 minutes', '[)')"
-)
+    "(CAST(:end AS timestamptz) AT TIME ZONE 'UTC') + CAST(:buffer AS interval), '[)')"
+).bindparams(buffer=rules.REFUEL_BUFFER)
+BUFFER_MINUTES = rules.REFUEL_BUFFER // timedelta(minutes=1)
 
 
 def find_conflicts(session: Session, ship_id: int, start: datetime, end: datetime) -> list[Booking]:
@@ -48,7 +49,7 @@ def create_booking(session: Session, data: BookingCreate, now: datetime) -> Book
             raise RuleViolation("booking_conflict", "That time overlaps another booking.")
         raise RuleViolation(
             "booking_conflict",
-            "That time is within the 30-minute refuel buffer of another booking.",
+            f"That time is within the {BUFFER_MINUTES}-minute refuel buffer of another booking.",
         )
 
     booking = Booking(

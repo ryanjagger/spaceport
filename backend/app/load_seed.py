@@ -1,6 +1,6 @@
 """Load the seed file into an empty database. Safe to run on every start.
 
-    python -m scripts.load_seed
+    python -m app.load_seed
 
 Does nothing if the bookings table already has rows. The whole load is one
 transaction: any invalid or conflicting row fails it and commits nothing.

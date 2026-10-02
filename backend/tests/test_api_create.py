@@ -147,6 +147,21 @@ class TestCreate:
             assert response.status_code == 422
             assert error_code(response) == "validation_error"
 
+    @pytest.mark.parametrize(
+        "change",
+        [
+            {"shipId": 99999999999},  # too big for the integer column
+            {"pilotName": "a\x00b"},
+            {"pilotName": "a\nb"},
+            {"startTime": "0001-01-01T06:00:00+14:00", "endTime": "0001-01-01T07:00:00+14:00"},
+            {"startTime": "9999-12-31T06:00:00-05:00", "endTime": "9999-12-31T07:00:00-05:00"},
+        ],
+    )
+    def test_values_the_database_cannot_hold_are_422(self, client: TestClient, change):
+        response = client.post("/api/bookings", json=payload("06:00", "07:00") | change)
+        assert response.status_code == 422
+        assert error_code(response) == "validation_error"
+
 
 class TestConcurrency:
     def test_two_simultaneous_bookings_one_wins(self, api, db: Engine, monkeypatch):
@@ -283,6 +298,11 @@ class TestAvailability:
         assert response.status_code == 404
         assert error_code(response) == "not_found"
 
+    def test_ship_id_too_big_for_the_column_is_422(self, client: TestClient):
+        response = client.get("/api/ships/99999999999/availability", params={"date": DAY})
+        assert response.status_code == 422
+        assert error_code(response) == "validation_error"
+
     @pytest.mark.parametrize(
         ("params", "code"),
         [
@@ -292,6 +312,10 @@ class TestAvailability:
             ({"date": DAY, "durationMinutes": 45}, "invalid_duration"),
             ({"date": DAY, "durationMinutes": 510}, "invalid_duration"),
             ({"date": DAY, "durationMinutes": 0}, "invalid_duration"),
+            ({"date": DAY, "durationMinutes": 10**20}, "invalid_duration"),
+            ({"date": DAY, "durationMinutes": -(10**20)}, "invalid_duration"),
+            ({"date": "9999-12-31"}, "validation_error"),
+            ({"date": "0001-01-01"}, "validation_error"),
         ],
     )
     def test_bad_params_are_422(self, client: TestClient, params, code):

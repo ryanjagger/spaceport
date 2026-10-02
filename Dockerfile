@@ -20,7 +20,6 @@ COPY backend/pyproject.toml backend/uv.lock ./
 RUN uv sync --frozen --no-dev
 COPY backend/schema.sql backend/entrypoint.sh ./
 COPY backend/app ./app
-COPY backend/scripts ./scripts
 
 # docker compose --profile test run --rm test
 FROM base AS test
@@ -32,4 +31,7 @@ CMD ["pytest"]
 FROM base AS runtime
 COPY data/seed.json ./data/seed.json
 COPY --from=frontend /frontend/dist ./static
+# Nothing is written at runtime, so the server needs no more than read access.
+RUN useradd --system --no-create-home spaceport
+USER spaceport
 CMD ["./entrypoint.sh"]

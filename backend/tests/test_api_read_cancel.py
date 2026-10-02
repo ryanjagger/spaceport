@@ -94,6 +94,11 @@ class TestCancel:
         assert response.status_code == 422
         assert error_code(response) == "validation_error"
 
+    def test_id_too_big_for_the_column_is_422(self, client: TestClient):
+        response = cancel(client, 10**20)
+        assert response.status_code == 422
+        assert error_code(response) == "validation_error"
+
     def test_two_simultaneous_cancels_one_wins(self, client: TestClient, db: Engine):
         booking = booked(client, "08:00", "10:00")
         barrier = threading.Barrier(2, timeout=10)
@@ -171,6 +176,9 @@ class TestList:
             {"from": "2026-10-01", "to": "2026-11-01"},  # 32 dates
             {"from": "yesterday", "to": DAY},
             {"from": DAY, "to": DAY, "shipId": "x"},
+            {"from": DAY, "to": DAY, "shipId": 99999999999},
+            {"from": "9999-12-30", "to": "9999-12-31"},
+            {"from": "0001-01-01", "to": "0001-01-02"},
         ],
     )
     def test_bad_params_are_422(self, client: TestClient, params):
@@ -219,5 +227,11 @@ class TestNearestDates:
 
     def test_missing_date_is_422(self, client: TestClient):
         response = client.get("/api/bookings/nearest-dates")
+        assert response.status_code == 422
+        assert error_code(response) == "validation_error"
+
+    @pytest.mark.parametrize("day", ["9999-12-31", "0001-01-01"])
+    def test_date_out_of_range_is_422(self, client: TestClient, day):
+        response = client.get("/api/bookings/nearest-dates", params={"date": day})
         assert response.status_code == 422
         assert error_code(response) == "validation_error"

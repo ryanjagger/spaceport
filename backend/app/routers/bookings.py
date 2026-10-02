@@ -1,11 +1,10 @@
-from datetime import date
 from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Query
 
 from app.clock import NowDep
 from app.db import SessionDep
-from app.schemas import BookingCreate, BookingOut, NearestDatesOut
+from app.schemas import ApiDate, BookingCreate, BookingId, BookingOut, NearestDatesOut, ShipId
 from app.services import bookings
 
 router = APIRouter()
@@ -16,9 +15,9 @@ MAX_RANGE_DAYS = 31
 @router.get("/bookings", response_model=list[BookingOut])
 def list_bookings(
     session: SessionDep,
-    first_day: Annotated[date, Query(alias="from")],
-    last_day: Annotated[date, Query(alias="to")],
-    ship_id: Annotated[int | None, Query(alias="shipId")] = None,
+    first_day: Annotated[ApiDate, Query(alias="from")],
+    last_day: Annotated[ApiDate, Query(alias="to")],
+    ship_id: Annotated[ShipId | None, Query(alias="shipId")] = None,
     include_cancelled: Annotated[bool, Query(alias="includeCancelled")] = False,
 ):
     if first_day > last_day:
@@ -31,7 +30,7 @@ def list_bookings(
 @router.get("/bookings/nearest-dates", response_model=NearestDatesOut)
 def nearest_dates(
     session: SessionDep,
-    day: Annotated[date, Query(alias="date")],
+    day: Annotated[ApiDate, Query(alias="date")],
     include_cancelled: Annotated[bool, Query(alias="includeCancelled")] = False,
 ):
     previous, following = bookings.nearest_dates(session, day, include_cancelled)
@@ -44,5 +43,5 @@ def create_booking(data: BookingCreate, session: SessionDep, now: NowDep):
 
 
 @router.delete("/bookings/{booking_id}", response_model=BookingOut)
-def cancel_booking(booking_id: int, session: SessionDep, now: NowDep):
+def cancel_booking(booking_id: BookingId, session: SessionDep, now: NowDep):
     return bookings.cancel_booking(session, booking_id, now)

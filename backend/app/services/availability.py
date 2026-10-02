@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -13,7 +13,7 @@ def get_availability(
     session: Session, ship_id: int, day: date, duration_minutes: int, now: datetime
 ) -> AvailabilityOut:
     get_ship(session, ship_id)
-    duration = timedelta(minutes=duration_minutes)
+    duration = rules.duration_of(duration_minutes)
     slots = rules.day_slots(day, duration)
 
     # Only this Central day's bookings: a booking and its buffer end by 10:30 PM,

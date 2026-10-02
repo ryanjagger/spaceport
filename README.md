@@ -32,7 +32,7 @@ The seed data is a year of history that ends in early June 2026, so today starts
 ```
 docker compose up -d db                      # Postgres on localhost:5433
 cd backend && uv sync
-uv run python -m app.init_db && uv run python -m scripts.load_seed
+uv run python -m app.init_db && uv run python -m app.load_seed
 uv run uvicorn app.main:app --reload         # API on :8000
 
 cd frontend && npm ci && npm run dev         # Vite on :5173, proxies /api to :8000
@@ -78,7 +78,7 @@ backend/
   app/routers/      HTTP only
   app/errors.py     one error envelope: {"error": {"code", "message"}}
   app/init_db.py    applies schema.sql; refuses to start if the constraint is missing or different
-  scripts/load_seed.py
+  app/load_seed.py  loads data/seed.json into an empty database
   tests/
 frontend/src/
   lib/time.ts       the only place that formats time; always America/Chicago
