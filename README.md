@@ -1,72 +1,114 @@
 # Spaceport Charter System
 
-Welcome, dispatcher. The Pacific Spaceport runs a small fleet of charter ships, and the booking process has — until now — involved a clipboard, a whiteboard, and a great deal of shouting. Your job is to build the replacement.
+A two-screen booking app for the Pacific Spaceport's five charter ships. Dispatchers book a ship for a time slot; a fleet manager sees every booking by ship and can cancel upcoming ones.
 
-## What to build
+The original brief is in [BRIEF.md](BRIEF.md), the full design in [SPACEPORT-PRD.md](SPACEPORT-PRD.md), and the build log in [PLAN.md](PLAN.md).
 
-A small full-stack application with two screens:
+## Run it
 
-1. **Charter a Ship.** A user picks a ship and a date, sees which time slots are unavailable, and books an available slot.
-2. **Fleet Manager Dashboard.** A view of all bookings across the fleet, organized by ship.
+Requires Docker.
 
-There is no authentication. Assume bookings carry a `pilotName` (free-text) so the manager view has something to display.
+```
+docker compose up --build
+```
+
+Open <http://localhost:8000>. The first start applies the schema and loads 3,000 seed bookings; later starts change nothing.
+
+| Task | Command |
+| --- | --- |
+| Run the tests (real Postgres, separate `spaceport_test` database) | `docker compose --profile test run --rm --build test` |
+| Reset all data to the seed | `docker compose down -v`, then `up` again |
+| Reset without recreating the volume | `docker compose exec app python -m app.init_db --reset` |
+| API docs | <http://localhost:8000/api/docs> |
+
+The seed data is a year of history that ends in early June 2026, so today starts empty. On the Fleet dashboard, "Previous day with bookings" jumps to the seeded days.
+
+### Live demo
+
+<https://app-production-a9d8.up.railway.app> runs the same Dockerfile on Railway with a Railway Postgres database. It is a shared demo: anyone with the link can book or cancel.
+
+### Local development
+
+```
+docker compose up -d db                      # Postgres on localhost:5433
+cd backend && uv sync
+uv run python -m app.init_db && uv run python -m scripts.load_seed
+uv run uvicorn app.main:app --reload         # API on :8000
+
+cd frontend && npm ci && npm run dev         # Vite on :5173, proxies /api to :8000
+```
+
+Backend tests outside Docker: `TEST_DATABASE_URL=postgresql://spaceport:spaceport@localhost:5433/spaceport_test uv run pytest`. The rules tests need no database: `uv run pytest tests/test_rules.py`.
+
+Lint and format: `uv run ruff check . && uv run ruff format .` and `npm run lint` / `npm run format`.
 
 ## The rules
 
-- **No overlapping bookings.** Two bookings for the same ship cannot overlap.
-- **Refueling buffer.** Consecutive bookings on the same ship must be separated by at least 30 minutes of refueling time.
-- **Operating hours.** The spaceport is open from **6:00 AM to 10:00 PM Central Time**, every day. Bookings must fall entirely within operating hours.
+All times are stored in UTC and every rule is evaluated in `America/Chicago`. Intervals are half-open, `[start, end)`.
 
-The unavailable-time information shown on the booking screen must come from a backend endpoint. Do not compute it on the client by fetching the full bookings list.
+| Rule | Meaning | Enforced by |
+| --- | --- | --- |
+| No overlap | Two active bookings on a ship never share an instant | Postgres exclusion constraint |
+| Refuel buffer | At least 30 minutes between bookings on a ship; exactly 30 is fine | The same constraint |
+| Operating hours | Start at or after 6:00 AM, end by 10:00 PM Central, same day | `rules.py` |
+| Grid and duration | Start on :00 or :30; 30 minutes to 8 hours in 30-minute steps | `rules.py` |
+| No past bookings | A booking can't start before the server's "now" | `rules.py` |
+| Cancellation | Only an active booking that hasn't started | One atomic `UPDATE` |
 
-## Data model (minimum)
+Overlap and buffer are one test. Extending every booking's end by 30 minutes turns "overlaps, or sits less than 30 minutes away" into a plain range overlap, which Postgres can forbid:
 
-- **Ship**: `id`, `name`
-- **Booking**: `id`, `shipId`, `pilotName`, `startTime`, `endTime`
-
-You may add fields as you see fit.
-
-## Seed data
-
-The repo includes `seed.py`, which prints a JSON object with the starting fleet and a year of existing bookings:
-
-```
-python seed.py > seed.json
-```
-
-Load it into your database however you like.
-
-The starting fleet:
-
-```json
-[
-  { "id": 1, "name": "USS Wanderer" },
-  { "id": 2, "name": "Nostromo" },
-  { "id": 3, "name": "Serenity" },
-  { "id": 4, "name": "Rocinante" },
-  { "id": 5, "name": "Millennium Falcon" }
-]
+```sql
+CONSTRAINT no_overlap_with_buffer EXCLUDE USING gist (
+  ship_id WITH =,
+  tsrange(start_time AT TIME ZONE 'UTC', (end_time AT TIME ZONE 'UTC') + interval '30 minutes', '[)') WITH &&
+) WHERE (status = 'active')
 ```
 
-## Stack
+The service checks for a conflict first, but only to give a precise message. Two simultaneous requests both pass that check; the constraint lets one commit and the other gets a 409. `tests/test_api_create.py::TestConcurrency` holds two requests at a barrier after the check to prove the database, not the check, decides.
 
-- **Frontend:** React.
-- **Backend:** Python — Django or FastAPI is a good starting point, but feel free to use a framework you're more comfortable with.
-- **Database:** your choice.
-- **Everything else:** your call — frameworks, libraries, project structure, API shape.
+## How it's built
 
-## Submission
+Two containers: Postgres 16, and one app container where FastAPI serves both the API and the built React files (same origin, so no CORS).
 
-Push your work to a public GitHub repository and send us the link.
+```
+backend/
+  schema.sql        tables and constraints, the source of truth
+  app/rules.py      every scheduling rule as a pure function (no database, no HTTP, no clock)
+  app/services/     transactions: availability, create, list, cancel
+  app/routers/      HTTP only
+  app/errors.py     one error envelope: {"error": {"code", "message"}}
+  app/init_db.py    applies schema.sql; refuses to start if the constraint is missing or different
+  scripts/load_seed.py
+  tests/
+frontend/src/
+  lib/time.ts       the only place that formats time; always America/Chicago
+  api/              typed fetch client and TanStack Query hooks
+  pages/            CharterPage, FleetDashboard
+  components/       SlotGrid, FleetTimeline, BookingDetails
+data/seed.json      generated once from the unmodified seed.py
+```
 
-## AI usage
+### API
 
-Using AI tools is permitted and expected. We don't care whether you used them; we care that you can explain and justify every decision in your submission. On the technical call we'll ask why your code is the way it is — be ready to walk through it as if you wrote every line yourself.
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/api/ships` | The fleet |
+| GET | `/api/ships/{id}/availability?date=&durationMinutes=` | Every start time for one Central day, each marked available or `past` / `booked` / `buffer` |
+| GET | `/api/bookings?from=&to=&shipId=&includeCancelled=` | Bookings by Central date (at most 31 dates) |
+| GET | `/api/bookings/nearest-dates?date=&includeCancelled=` | Nearest earlier and later dates with bookings |
+| POST | `/api/bookings` | Create: 201, or 409 `booking_conflict` / `in_the_past`, or 422 |
+| DELETE | `/api/bookings/{id}` | Cancel (soft delete): 200, or 409 `already_started` / `already_cancelled` |
+| GET | `/api/time` | The server's clock; the UI takes "today" from it |
+| GET | `/api/health` | Liveness and database check |
 
-## Time
+A 409 always means "the request was fine but the world moved on"; the UI shows the message and refreshes. Malformed input is a 422.
 
-Aim for **2–3 hours**. If you find yourself going significantly over, stop and make a note of what you'd do next — we'd rather see a focused, working submission than an exhausted one.
+### Time zones
 
-We'll review your code beforehand and discuss it with you on a follow-up call, where we'll ask about your decisions and may request a small modification live. Build something you'll be comfortable walking us through.
+Every date and time means spaceport time, for every user, like an airline departure time.
 
-Good luck, dispatcher. The fleet is waiting.
+- The client never builds a timestamp. It sends back the exact `start` / `end` strings the availability endpoint returned.
+- Dates move through the frontend as `YYYY-MM-DD` strings, never `Date` objects.
+- "Today" is the Central date of the server's clock, not the device's.
+- A user outside Central also sees their own time as a hint: "9:00 PM CT (Sun 11:00 AM your time)".
+- Daylight saving switches at 2:00 AM, outside operating hours, so every operating day is 16 hours. No code hard-codes an offset; tests cover 2026-11-01 and 2027-03-14.

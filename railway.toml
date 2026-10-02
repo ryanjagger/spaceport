@@ -1,0 +1,13 @@
+# Railway builds the Dockerfile's last stage (runtime) and waits for the health check
+# before switching traffic. DATABASE_URL is set on the service as a reference to the
+# Postgres service: ${{Postgres.DATABASE_URL}}. PORT is provided by Railway.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/api/health"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3

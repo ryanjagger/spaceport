@@ -1,0 +1,109 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-left: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.toggle input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--ink);
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 12px;
+}
+
+.today {
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--signal);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.group h3 {
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--ink);
+  font-size: 1.1rem;
+}
+
+.group ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.none {
+  padding: 10px 0;
+  color: var(--muted);
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 4px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.entry:hover {
+  background: var(--surface);
+}
+
+.entryTimes {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.cancelled {
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* On narrow screens the grouped list is the view; the timeline needs width to read. */
+@media (max-width: 760px) {
+  .timeline {
+    display: none;
+  }
+
+  .list {
+    margin-top: 0;
+  }
+}
