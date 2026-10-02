@@ -1,0 +1,230 @@
+.lanes {
+  --name-width: 296px;
+  --inset: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.axis {
+  position: relative;
+  height: 30px;
+  margin: 0 var(--inset) 0 var(--name-width);
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 30px;
+}
+
+.axis span {
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.axis span:first-child {
+  transform: none;
+}
+
+.axis span:last-child {
+  transform: translateX(-100%);
+}
+
+.lane {
+  display: grid;
+  grid-template-columns: var(--name-width) minmax(0, 1fr);
+  align-items: center;
+  padding-right: var(--inset);
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+  transition: background 120ms ease-out;
+}
+
+.lane:hover {
+  background: var(--ground);
+}
+
+.lane:has(input:checked) {
+  background: var(--accent-soft);
+}
+
+.lane:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.lane input:focus-visible {
+  outline: none;
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 12px 0 var(--inset);
+}
+
+.who input {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.name {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.count {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+/* One vertical rule per hour, 16 hours across. */
+.track {
+  position: relative;
+  height: 48px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--line) 0 1px,
+    transparent 1px calc(100% / 16)
+  );
+  border-right: 1px solid var(--line);
+}
+
+.block,
+.refuel,
+.pick {
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+}
+
+.block,
+.pick {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  border-radius: 4px;
+  overflow: hidden;
+  /* Lets the label hide itself when the block is too short to hold it. */
+  container-type: inline-size;
+}
+
+.block {
+  background: var(--accent-fill);
+  color: var(--accent-ink);
+}
+
+.refuel {
+  border-radius: 0 4px 4px 0;
+  background: var(--refuel-fill);
+}
+
+.pick {
+  z-index: 1;
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.pilot {
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@container (max-width: 56px) {
+  .pilot {
+    display: none;
+  }
+}
+
+.now {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--danger);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  padding: 10px var(--inset);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legendBlock,
+.legendRefuel,
+.legendPick {
+  width: 20px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legendBlock {
+  background: var(--accent-fill);
+}
+
+.legendRefuel {
+  background: var(--refuel-fill);
+}
+
+.legendPick {
+  background: var(--accent);
+}
+
+.legendNow {
+  width: 2px;
+  height: 12px;
+  background: var(--danger);
+}
+
+/* Narrow screens: the name sits above its own lane, on the same shared scale. */
+@media (max-width: 760px) {
+  .axis {
+    margin-left: var(--inset);
+  }
+
+  .axis span:nth-child(even) {
+    display: none;
+  }
+
+  .lane {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 10px var(--inset) 12px;
+  }
+
+  .who {
+    min-height: 32px;
+    padding: 0;
+  }
+
+  .track {
+    height: 36px;
+  }
+
+  .block,
+  .refuel,
+  .pick {
+    top: 6px;
+    bottom: 6px;
+  }
+}

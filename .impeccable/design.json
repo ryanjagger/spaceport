@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-01T23:55:00-05:00",
+  "title": "Design System: Spaceport Charter System",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Dispatch Indigo",
+        "canonical": "#4b4fd9",
+        "tonalRamp": [
+          "oklch(15% 0.206 275)",
+          "oklch(27% 0.206 275)",
+          "oklch(38% 0.206 275)",
+          "oklch(50% 0.206 275)",
+          "oklch(61% 0.206 275)",
+          "oklch(73% 0.206 275)",
+          "oklch(84% 0.206 275)",
+          "oklch(95% 0.206 275)"
+        ]
+      },
+      "accent-hover": {
+        "role": "primary",
+        "displayName": "Dispatch Indigo, hover",
+        "canonical": "#3d40bf",
+        "tonalRamp": [
+          "oklch(15% 0.194 275)",
+          "oklch(27% 0.194 275)",
+          "oklch(38% 0.194 275)",
+          "oklch(50% 0.194 275)",
+          "oklch(61% 0.194 275)",
+          "oklch(73% 0.194 275)",
+          "oklch(84% 0.194 275)",
+          "oklch(95% 0.194 275)"
+        ]
+      },
+      "accent-soft": {
+        "role": "primary",
+        "displayName": "Indigo Wash",
+        "canonical": "#ecedfd",
+        "tonalRamp": [
+          "oklch(15% 0.021 283)",
+          "oklch(27% 0.021 283)",
+          "oklch(38% 0.021 283)",
+          "oklch(50% 0.021 283)",
+          "oklch(61% 0.021 283)",
+          "oklch(73% 0.021 283)",
+          "oklch(84% 0.021 283)",
+          "oklch(95% 0.021 283)"
+        ]
+      },
+      "accent-fill": {
+        "role": "primary",
+        "displayName": "Indigo Tint",
+        "canonical": "#c5c8f6",
+        "tonalRamp": [
+          "oklch(15% 0.064 282)",
+          "oklch(27% 0.064 282)",
+          "oklch(38% 0.064 282)",
+          "oklch(50% 0.064 282)",
+          "oklch(61% 0.064 282)",
+          "oklch(73% 0.064 282)",
+          "oklch(84% 0.064 282)",
+          "oklch(95% 0.064 282)"
+        ]
+      },
+      "accent-ink": {
+        "role": "primary",
+        "displayName": "Indigo Ink",
+        "canonical": "#3033a3",
+        "tonalRamp": [
+          "oklch(15% 0.176 274)",
+          "oklch(27% 0.176 274)",
+          "oklch(38% 0.176 274)",
+          "oklch(50% 0.176 274)",
+          "oklch(61% 0.176 274)",
+          "oklch(73% 0.176 274)",
+          "oklch(84% 0.176 274)",
+          "oklch(95% 0.176 274)"
+        ]
+      },
+      "refuel": {
+        "role": "secondary",
+        "displayName": "Refuel Amber, text",
+        "canonical": "#8a4708",
+        "tonalRamp": [
+          "oklch(15% 0.113 55)",
+          "oklch(27% 0.113 55)",
+          "oklch(38% 0.113 55)",
+          "oklch(50% 0.113 55)",
+          "oklch(61% 0.113 55)",
+          "oklch(73% 0.113 55)",
+          "oklch(84% 0.113 55)",
+          "oklch(95% 0.113 55)"
+        ]
+      },
+      "refuel-soft": {
+        "role": "secondary",
+        "displayName": "Refuel Amber, soft",
+        "canonical": "#fdf1d8",
+        "tonalRamp": [
+          "oklch(15% 0.035 85)",
+          "oklch(27% 0.035 85)",
+          "oklch(38% 0.035 85)",
+          "oklch(50% 0.035 85)",
+          "oklch(61% 0.035 85)",
+          "oklch(73% 0.035 85)",
+          "oklch(84% 0.035 85)",
+          "oklch(95% 0.035 85)"
+        ]
+      },
+      "refuel-fill": {
+        "role": "secondary",
+        "displayName": "Refuel Amber",
+        "canonical": "#f3cd7c",
+        "tonalRamp": [
+          "oklch(15% 0.109 85)",
+          "oklch(27% 0.109 85)",
+          "oklch(38% 0.109 85)",
+          "oklch(50% 0.109 85)",
+          "oklch(61% 0.109 85)",
+          "oklch(73% 0.109 85)",
+          "oklch(84% 0.109 85)",
+          "oklch(95% 0.109 85)"
+        ]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Signal Red",
+        "canonical": "#b42318",
+        "tonalRamp": [
+          "oklch(15% 0.182 30)",
+          "oklch(27% 0.182 30)",
+          "oklch(38% 0.182 30)",
+          "oklch(50% 0.182 30)",
+          "oklch(61% 0.182 30)",
+          "oklch(73% 0.182 30)",
+          "oklch(84% 0.182 30)",
+          "oklch(95% 0.182 30)"
+        ]
+      },
+      "danger-hover": {
+        "role": "tertiary",
+        "displayName": "Signal Red, hover",
+        "canonical": "#912018",
+        "tonalRamp": [
+          "oklch(15% 0.150 29)",
+          "oklch(27% 0.150 29)",
+          "oklch(38% 0.150 29)",
+          "oklch(50% 0.150 29)",
+          "oklch(61% 0.150 29)",
+          "oklch(73% 0.150 29)",
+          "oklch(84% 0.150 29)",
+          "oklch(95% 0.150 29)"
+        ]
+      },
+      "danger-soft": {
+        "role": "tertiary",
+        "displayName": "Signal Red, soft",
+        "canonical": "#feecea",
+        "tonalRamp": [
+          "oklch(15% 0.020 25)",
+          "oklch(27% 0.020 25)",
+          "oklch(38% 0.020 25)",
+          "oklch(50% 0.020 25)",
+          "oklch(61% 0.020 25)",
+          "oklch(73% 0.020 25)",
+          "oklch(84% 0.020 25)",
+          "oklch(95% 0.020 25)"
+        ]
+      },
+      "ok": {
+        "role": "tertiary",
+        "displayName": "Confirm Green",
+        "canonical": "#16703f",
+        "tonalRamp": [
+          "oklch(15% 0.113 154)",
+          "oklch(27% 0.113 154)",
+          "oklch(38% 0.113 154)",
+          "oklch(50% 0.113 154)",
+          "oklch(61% 0.113 154)",
+          "oklch(73% 0.113 154)",
+          "oklch(84% 0.113 154)",
+          "oklch(95% 0.113 154)"
+        ]
+      },
+      "ok-soft": {
+        "role": "tertiary",
+        "displayName": "Confirm Green, soft",
+        "canonical": "#e5f5ec",
+        "tonalRamp": [
+          "oklch(15% 0.021 161)",
+          "oklch(27% 0.021 161)",
+          "oklch(38% 0.021 161)",
+          "oklch(50% 0.021 161)",
+          "oklch(61% 0.021 161)",
+          "oklch(73% 0.021 161)",
+          "oklch(84% 0.021 161)",
+          "oklch(95% 0.021 161)"
+        ]
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Cool Ground",
+        "canonical": "#f6f7f9",
+        "tonalRamp": [
+          "oklch(15% 0.003 265)",
+          "oklch(27% 0.003 265)",
+          "oklch(38% 0.003 265)",
+          "oklch(50% 0.003 265)",
+          "oklch(61% 0.003 265)",
+          "oklch(73% 0.003 265)",
+          "oklch(84% 0.003 265)",
+          "oklch(95% 0.003 265)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.000 90)",
+          "oklch(27% 0.000 90)",
+          "oklch(38% 0.000 90)",
+          "oklch(50% 0.000 90)",
+          "oklch(61% 0.000 90)",
+          "oklch(73% 0.000 90)",
+          "oklch(84% 0.000 90)",
+          "oklch(95% 0.000 90)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Desk Ink",
+        "canonical": "#1a1f2c",
+        "tonalRamp": [
+          "oklch(15% 0.026 268)",
+          "oklch(27% 0.026 268)",
+          "oklch(38% 0.026 268)",
+          "oklch(50% 0.026 268)",
+          "oklch(61% 0.026 268)",
+          "oklch(73% 0.026 268)",
+          "oklch(84% 0.026 268)",
+          "oklch(95% 0.026 268)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Slate Muted",
+        "canonical": "#5c6577",
+        "tonalRamp": [
+          "oklch(15% 0.031 264)",
+          "oklch(27% 0.031 264)",
+          "oklch(38% 0.031 264)",
+          "oklch(50% 0.031 264)",
+          "oklch(61% 0.031 264)",
+          "oklch(73% 0.031 264)",
+          "oklch(84% 0.031 264)",
+          "oklch(95% 0.031 264)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#e1e4ea",
+        "tonalRamp": [
+          "oklch(15% 0.009 265)",
+          "oklch(27% 0.009 265)",
+          "oklch(38% 0.009 265)",
+          "oklch(50% 0.009 265)",
+          "oklch(61% 0.009 265)",
+          "oklch(73% 0.009 265)",
+          "oklch(84% 0.009 265)",
+          "oklch(95% 0.009 265)"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Control Edge",
+        "canonical": "#858e9f",
+        "tonalRamp": [
+          "oklch(15% 0.027 263)",
+          "oklch(27% 0.027 263)",
+          "oklch(38% 0.027 263)",
+          "oklch(50% 0.027 263)",
+          "oklch(61% 0.027 263)",
+          "oklch(73% 0.027 263)",
+          "oklch(84% 0.027 263)",
+          "oklch(95% 0.027 263)"
+        ]
+      },
+      "past-soft": {
+        "role": "neutral",
+        "displayName": "Past Grey",
+        "canonical": "#eef0f3",
+        "tonalRamp": [
+          "oklch(15% 0.005 258)",
+          "oklch(27% 0.005 258)",
+          "oklch(38% 0.005 258)",
+          "oklch(50% 0.005 258)",
+          "oklch(61% 0.005 258)",
+          "oklch(73% 0.005 258)",
+          "oklch(84% 0.005 258)",
+          "oklch(95% 0.005 258)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The departure time in the charter panel. Once per screen."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page title."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section, panel and dialog headings."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "Ship names heading a fleet list group; the time on a start-time button."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default text and control text, with tabular figures. 500 acts, 600 names."
+      },
+      "body-small": {
+        "displayName": "Body small",
+        "purpose": "Captions under headings and hints, in muted."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, counts, legends, the clock label. Muted, sentence case."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Axis ticks, hour labels, second line of a start time; at 600, pilot names on blocks and pill text."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-overlay",
+        "value": "0 12px 32px -8px rgb(26 31 44 / 0.22), 0 2px 6px -2px rgb(26 31 44 / 0.12)",
+        "purpose": "The booking details dialog, over a backdrop of ink at 45%."
+      },
+      {
+        "name": "pinned-bar",
+        "value": "0 -10px 24px -14px rgb(26 31 44 / 0.3)",
+        "purpose": "The charter panel when pinned to the bottom of a phone. Written inline in the build, not a custom property."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state",
+        "value": "120ms ease-out",
+        "purpose": "Background and border changes on hover for buttons, lanes and start times."
+      },
+      {
+        "name": "shimmer",
+        "value": "1.4s linear infinite",
+        "purpose": "Loading skeleton bars."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation: none; transition: none",
+        "purpose": "Applied to everything under prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "nav-wrap",
+        "value": "640px"
+      },
+      {
+        "name": "lanes-stack",
+        "value": "760px"
+      },
+      {
+        "name": "panel-pins",
+        "value": "860px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "The default button: day stepping, Close, the first step of a cancel.",
+      "html": "<button class=\"ds-btn\">Previous day</button>",
+      "css": ".ds-btn { height: 40px; padding: 0 16px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface); color: var(--ink); font: 500 0.9375rem/1.5 var(--font-body); cursor: pointer; white-space: nowrap; transition: background 120ms ease-out; } .ds-btn:hover:not(:disabled) { background: var(--ground); } .ds-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; } .ds-btn:disabled { border-color: var(--line); color: var(--muted); cursor: not-allowed; }"
+    },
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one committing action in a view. Solid indigo.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Book charter</button>",
+      "css": ".ds-btn { height: 40px; padding: 0 16px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface); color: var(--ink); font: 500 0.9375rem/1.5 var(--font-body); cursor: pointer; white-space: nowrap; transition: background 120ms ease-out; } .ds-btn:hover:not(:disabled) { background: var(--ground); } .ds-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; } .ds-btn:disabled { border-color: var(--line); color: var(--muted); cursor: not-allowed; } .ds-btn-primary { border-color: var(--accent); background: var(--accent); color: var(--surface); } .ds-btn-primary:hover:not(:disabled) { border-color: var(--accent-hover); background: var(--accent-hover); } .ds-btn-primary:disabled { border-color: var(--line); background: var(--past-soft); color: var(--muted); }"
+    },
+    {
+      "name": "Danger Button",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Second step of a destructive confirm only.",
+      "html": "<button class=\"ds-btn ds-btn-danger\">Yes, cancel booking</button>",
+      "css": ".ds-btn { height: 40px; padding: 0 16px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface); color: var(--ink); font: 500 0.9375rem/1.5 var(--font-body); cursor: pointer; white-space: nowrap; transition: background 120ms ease-out; } .ds-btn:hover:not(:disabled) { background: var(--ground); } .ds-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; } .ds-btn:disabled { border-color: var(--line); color: var(--muted); cursor: not-allowed; } .ds-btn-danger { border-color: var(--danger); background: var(--danger); color: var(--surface); } .ds-btn-danger:hover:not(:disabled) { background: var(--danger-hover); }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Label above a 40px input; text, date and select share the style.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-label\">Pilot name</span><input class=\"ds-input\" value=\"Ellen Ripley\"></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 6px; width: 240px; font-family: var(--font-body); } .ds-label { font-size: 0.8125rem; font-weight: 500; color: var(--muted); } .ds-input { height: 40px; padding: 0 12px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface); color: var(--ink); font: inherit; font-size: 0.9375rem; } .ds-input:hover { border-color: var(--ink); } .ds-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }"
+    },
+    {
+      "name": "Top Bar Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "White top bar tabs; the active tab is ink with a 2px indigo underline.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link ds-nav-active\" href=\"#\">Charter a ship</a><a class=\"ds-nav-link\" href=\"#\">Fleet dashboard</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 4px; padding: 0 16px; border-bottom: 1px solid var(--line); background: var(--surface); font-family: var(--font-body); } .ds-nav-link { display: flex; align-items: center; min-height: 44px; padding: 0 12px; border-bottom: 2px solid transparent; color: var(--muted); font-size: 0.9375rem; font-weight: 500; text-decoration: none; } .ds-nav-link:hover { color: var(--ink); } .ds-nav-link:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; } .ds-nav-active { border-bottom-color: var(--accent); color: var(--ink); }"
+    },
+    {
+      "name": "Start Time",
+      "kind": "custom",
+      "refersTo": "slot",
+      "description": "A 48px two-line start-time button: open, selected, and unavailable with its reason on the matching tint.",
+      "html": "<div class=\"ds-slots\"><button class=\"ds-slot\"><span class=\"ds-slot-time\">8:30 AM</span><span class=\"ds-slot-status\">to 9:30 AM</span></button><button class=\"ds-slot ds-slot-selected\"><span class=\"ds-slot-time\">9:00 AM</span><span class=\"ds-slot-status\">to 10:00 AM</span></button><button class=\"ds-slot ds-slot-booked\" disabled><span class=\"ds-slot-time\">1:00 PM</span><span class=\"ds-slot-status\">Booked</span></button><button class=\"ds-slot ds-slot-buffer\" disabled><span class=\"ds-slot-time\">12:00 PM</span><span class=\"ds-slot-status\">Refuel time</span></button><button class=\"ds-slot\" disabled><span class=\"ds-slot-time\">6:00 AM</span><span class=\"ds-slot-status\">Past</span></button></div>",
+      "css": ".ds-slots { display: grid; grid-template-columns: repeat(5, 104px); gap: 6px; font-family: var(--font-body); font-variant-numeric: tabular-nums; } .ds-slot { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 48px; padding: 5px 8px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface); color: var(--ink); font: inherit; line-height: 1.3; text-align: left; cursor: pointer; transition: background 120ms ease-out, border-color 120ms ease-out; } .ds-slot:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); } .ds-slot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; } .ds-slot-time { font-size: 0.875rem; font-weight: 600; white-space: nowrap; } .ds-slot-status { color: var(--muted); font-size: 0.75rem; white-space: nowrap; } .ds-slot-selected, .ds-slot-selected:hover:not(:disabled) { border-color: var(--accent); background: var(--accent); color: var(--surface); } .ds-slot-selected .ds-slot-status { color: var(--accent-soft); } .ds-slot:disabled { border-color: transparent; background: var(--past-soft); color: var(--muted); cursor: not-allowed; } .ds-slot:disabled .ds-slot-time { font-weight: 400; } .ds-slot:disabled .ds-slot-status { font-weight: 500; } .ds-slot-booked:disabled, .ds-slot-booked:disabled .ds-slot-status { background: var(--accent-soft); color: var(--accent-ink); } .ds-slot-buffer:disabled, .ds-slot-buffer:disabled .ds-slot-status { background: var(--refuel-soft); color: var(--refuel); }"
+    },
+    {
+      "name": "Day Lane",
+      "kind": "custom",
+      "refersTo": "block-booked",
+      "description": "One ship on the shared 6 AM to 10 PM scale: booked block, refuel block, the solid pick and the now marker, with a text legend.",
+      "html": "<div class=\"ds-lanes\"><label class=\"ds-lane\"><span class=\"ds-lane-who\"><input type=\"radio\" name=\"ds-ship\" checked><span class=\"ds-lane-name\">USS Wanderer</span><span class=\"ds-lane-count\">12 open starts</span></span><span class=\"ds-track\"><span class=\"ds-block ds-pick\" style=\"left:18.75%;width:6.25%\"></span><span class=\"ds-block ds-booked\" style=\"left:43.75%;width:25%\">Ryan</span><span class=\"ds-block ds-refuel\" style=\"left:68.75%;width:3.125%\"></span><span class=\"ds-now\" style=\"left:34%\"></span></span></label><p class=\"ds-legend\"><span><i class=\"ds-sw ds-booked\"></i> Booked</span><span><i class=\"ds-sw ds-refuel\"></i> Refuel gap, 30 minutes after each charter</span><span><i class=\"ds-sw ds-pick\"></i> Your pick</span></p></div>",
+      "css": ".ds-lanes { width: 640px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; font-family: var(--font-body); font-size: 0.9375rem; color: var(--ink); } .ds-lane { display: grid; grid-template-columns: 250px minmax(0, 1fr); align-items: center; padding-right: 16px; cursor: pointer; background: var(--accent-soft); } .ds-lane:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: -2px; } .ds-lane-who { display: flex; align-items: center; gap: 10px; padding: 0 12px 0 16px; } .ds-lane-who input { width: 16px; height: 16px; margin: 0; accent-color: var(--accent); } .ds-lane-name { font-weight: 600; white-space: nowrap; } .ds-lane-count { margin-left: auto; color: var(--muted); font-size: 0.8125rem; white-space: nowrap; } .ds-track { position: relative; height: 48px; background: repeating-linear-gradient(to right, var(--line) 0 1px, transparent 1px calc(100% / 16)); border-right: 1px solid var(--line); } .ds-block { position: absolute; top: 9px; bottom: 9px; display: flex; align-items: center; padding: 0 6px; border-radius: 4px; overflow: hidden; font-size: 0.75rem; font-weight: 600; } .ds-booked { background: var(--accent-fill); color: var(--accent-ink); } .ds-refuel { padding: 0; border-radius: 0 4px 4px 0; background: var(--refuel-fill); } .ds-pick { z-index: 1; background: var(--accent); color: var(--surface); } .ds-now { position: absolute; top: 0; bottom: 0; z-index: 2; width: 2px; margin-left: -1px; background: var(--danger); } .ds-legend { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0; padding: 10px 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.8125rem; } .ds-legend > span { display: inline-flex; align-items: center; gap: 6px; } .ds-sw { width: 20px; height: 10px; border-radius: 2px; }"
+    },
+    {
+      "name": "Notice",
+      "kind": "custom",
+      "refersTo": "notice-success",
+      "description": "Result of an action: a state-colour border over its soft tint, in words.",
+      "html": "<div class=\"ds-notices\"><p class=\"ds-notice ds-notice-ok\">Booked USS Wanderer for Ellen Ripley, 9:00 AM to 10:00 AM CT.</p><p class=\"ds-notice ds-notice-error\">That time was just taken. Pick another start.</p></div>",
+      "css": ".ds-notices { display: grid; gap: 8px; width: 420px; font-family: var(--font-body); } .ds-notice { margin: 0; padding: 10px 14px; border: 1px solid; border-radius: var(--radius); color: var(--ink); font-size: 0.9375rem; font-weight: 500; } .ds-notice-ok { border-color: var(--ok); background: var(--ok-soft); } .ds-notice-error { border-color: var(--danger); background: var(--danger-soft); }"
+    },
+    {
+      "name": "Charter Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "White hairline card leading with the departure time in the display style, then a term and value summary.",
+      "html": "<section class=\"ds-panel\"><h2 class=\"ds-panel-title\">Your charter</h2><p class=\"ds-departs\"><span class=\"ds-departs-label\">Departs</span>9:00 AM CT</p><dl class=\"ds-summary\"><dt>Ship</dt><dd>USS Wanderer</dd><dt>Returns</dt><dd>10:00 AM CT</dd></dl></section>",
+      "css": ".ds-panel { display: flex; flex-direction: column; gap: 16px; width: 320px; padding: 20px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); color: var(--ink); font-family: var(--font-body); font-size: 0.9375rem; font-variant-numeric: tabular-nums; } .ds-panel-title { margin: 0; font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.005em; line-height: 1.25; } .ds-departs { display: flex; flex-direction: column; margin: 0; font-size: 1.75rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; } .ds-departs-label { color: var(--muted); font-size: 0.8125rem; font-weight: 500; letter-spacing: 0; line-height: 1.5; } .ds-summary { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 0; padding-top: 14px; border-top: 1px solid var(--line); } .ds-summary dt { color: var(--muted); } .ds-summary dd { margin: 0; font-weight: 500; text-align: right; }"
+    },
+    {
+      "name": "Pill",
+      "kind": "chip",
+      "refersTo": "pill-today",
+      "description": "Fully round tag carrying its own word: today, or a cancelled booking.",
+      "html": "<span class=\"ds-pill ds-pill-today\">Today</span> <span class=\"ds-pill ds-pill-cancelled\">Cancelled</span>",
+      "css": ".ds-pill { padding: 2px 8px; border-radius: 999px; font: 600 0.75rem/1.5 var(--font-body); } .ds-pill-today { background: var(--accent-soft); color: var(--accent-ink); } .ds-pill-cancelled { padding: 1px 8px; background: var(--danger-soft); color: var(--danger); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Bright Desk",
+    "overview": "This is the category standard for an operations tool, chosen on purpose: white surfaces on a very light cool grey ground, hairline borders, near-black ink and a single indigo accent. The craft bar is Linear and the Stripe Dashboard. The setting it is built for is a dispatcher at a desk in a bright office, often on the phone with a pilot, so everything is legible at a glance and nothing asks for attention it has not earned. There is no themed motif; the ships' names are the only space in the room.\n\nDensity is moderate and steady. Body text is 15px, controls are 40px tall on a desk and 44px on a phone, and the whole fleet's day sits on one shared 6 AM to 10 PM scale. Colour is spent on meaning only: a tint says what a stretch of time is, and the same tint says the same thing on both screens. Every state colour is paired with words, so the screen still reads with the colour removed.\n\nMotion is nearly absent. Hover states ease a background or border over 120ms; the loading skeleton shimmers; nothing enters, slides or bounces, and reduced-motion turns all of it off.",
+    "keyCharacteristics": [
+      "White cards on a cool grey ground, separated by 1px hairlines rather than shadow.",
+      "One indigo accent, kept for the selection, the active nav tab and the primary button.",
+      "State colours with a text label alongside: indigo tint booked, amber refuel, grey past, green success, red danger and now.",
+      "Inter with tabular figures, so times line up in columns and never shift width.",
+      "6px radii on controls, 10px on containers, 4px on timeline blocks.",
+      "Flat at rest; shadow only on things that float over the page."
+    ],
+    "rules": [
+      {
+        "name": "The Tint Means Booked Rule",
+        "body": "Indigo tint is a booking on both screens. Solid indigo is never a booking; it is the one thing the user has chosen, the tab they are on, or the button that commits.",
+        "section": "colors"
+      },
+      {
+        "name": "The Colour Plus Words Rule",
+        "body": "No state is carried by colour alone. Every tinted start time prints its reason (\"Booked\", \"Refuel time\", \"Past\"), every timeline has a legend in text, and pills contain their word.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Meaning Rule",
+        "body": "Each state colour has one job: amber is refuel, grey is past, green is success, red is now or destructive. A new state gets a new label first and a colour only if none of these already fits.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "`font-variant-numeric: tabular-nums` is set on the body. Times align in columns and do not shift width when they change.",
+        "section": "typography"
+      },
+      {
+        "name": "The Three Weights Rule",
+        "body": "400 reads, 500 acts, 600 names. Nothing is lighter than 400 or heavier than 600.",
+        "section": "typography"
+      },
+      {
+        "name": "The Floats Only Rule",
+        "body": "If it sits in the page flow, it has a hairline and no shadow. If it floats over the page, it has a shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep solid indigo (`accent`) for the selection, the active nav tab and the primary button. Use the tints for booked.",
+      "Do print the word next to every state colour: \"Booked\", \"Refuel time\", \"Past\", \"Cancelled\", and a text legend on every timeline.",
+      "Do separate surfaces with a 1px hairline (`line`) and tone; give anything you can click or type into the stronger `line-strong` edge.",
+      "Do use 6px radii on controls, 10px on containers and 4px on timeline blocks.",
+      "Do keep tabular figures on, and label every time \"CT\".",
+      "Do keep controls at 40px on a desk and 44px at 860px and below, with input text at 16px there.",
+      "Do keep transitions to 120ms ease-out on background and border, and leave them covered by the reduced-motion rule.",
+      "Do write labels in sentence case at weights 400, 500 or 600."
+    ],
+    "donts": [
+      "Don't use solid indigo for a booking, or indigo tint for anything that is not booked or the selected row.",
+      "Don't let colour carry a state on its own; a tint without its word is a defect.",
+      "Don't give amber, grey, green or red a second meaning.",
+      "Don't put a shadow on anything in the page flow; shadows belong to the dialog and the pinned mobile bar.",
+      "Don't add a second accent hue or a second typeface.",
+      "Don't add a themed space motif. The category standard was chosen deliberately.",
+      "Don't hide the reason a time is unavailable behind a tooltip; it is visible text on the control."
+    ]
+  }
+}

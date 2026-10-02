@@ -69,7 +69,7 @@ export function FleetDashboard() {
 
       <div className={styles.controls}>
         <button type="button" className={ui.button} onClick={() => goTo(addDays(date, -1))}>
-          ← Previous day
+          Previous day
         </button>
         <label className={ui.field}>
           <span className={ui.visuallyHidden}>Date (Central)</span>
@@ -81,7 +81,7 @@ export function FleetDashboard() {
           />
         </label>
         <button type="button" className={ui.button} onClick={() => goTo(addDays(date, 1))}>
-          Next day →
+          Next day
         </button>
         <button
           type="button"
@@ -120,7 +120,7 @@ export function FleetDashboard() {
             disabled={!nearest.data?.previous}
             onClick={() => jumpTo(nearest.data!.previous)}
           >
-            ← Previous day with bookings
+            Previous day with bookings
           </button>
           <button
             type="button"
@@ -128,7 +128,7 @@ export function FleetDashboard() {
             disabled={!nearest.data?.next}
             onClick={() => jumpTo(nearest.data!.next)}
           >
-            Next day with bookings →
+            Next day with bookings
           </button>
         </EmptyState>
       ) : (

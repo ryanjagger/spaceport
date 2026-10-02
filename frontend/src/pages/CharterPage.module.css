@@ -1,9 +1,18 @@
+.lead {
+  max-width: 70ch;
+  margin-top: 6px;
+  color: var(--muted);
+}
+
 .controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
   gap: 16px;
-  margin: 20px 0;
-  max-width: 760px;
+  margin: 20px 0 28px;
+}
+
+.fleet h2 {
+  margin-bottom: 12px;
 }
 
 .columns {
@@ -11,13 +20,14 @@
   grid-template-columns: minmax(0, 1fr) 320px;
   align-items: start;
   gap: 32px;
-  margin-top: 20px;
+  margin-top: 32px;
 }
 
 .caption {
-  margin: 8px 0 16px;
+  max-width: 70ch;
+  margin: 6px 0 20px;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
 .panel {
@@ -28,17 +38,11 @@
   gap: 16px;
   padding: 20px;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   background: var(--surface);
 }
 
-/* The same amber rule that marks the current page in the header. */
-.panel h2 {
-  padding-bottom: 10px;
-  border-bottom: 4px solid var(--signal);
-}
-
-/* Shown above a grid with nothing bookable in it. */
+/* Shown above a list with nothing bookable in it. */
 .noneOpen {
   display: flex;
   flex-wrap: wrap;
@@ -54,37 +58,108 @@
 }
 
 /* An empty live region would otherwise still take a gap in the panel. */
-.status:empty {
+.panel > div:empty,
+.pilotHint:empty {
   display: none;
+}
+
+/* The departure time is the one thing to check before booking, so it is the largest. */
+.departs {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.departsLabel {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.5;
 }
 
 .summary {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 6px 16px;
-  margin: 0;
+  margin: 14px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
 }
 
 .summary dt {
   color: var(--muted);
-  font-size: 0.85rem;
 }
 
 .summary dd {
   margin: 0;
   font-weight: 500;
+  text-align: right;
 }
 
-.hint {
+.compact {
+  display: none;
+}
+
+.hint,
+.pilotHint {
   color: var(--muted);
+  font-size: 0.875rem;
 }
 
+/* The panel becomes a bar pinned to the bottom, so picking a time never leaves the
+   pilot field, the Book button or the result a long scroll away. */
 @media (max-width: 860px) {
   .columns {
     grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
   }
 
   .panel {
-    position: static;
+    top: auto;
+    bottom: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 10px 12px;
+    margin: 0 calc(-1 * var(--gutter)) -64px;
+    padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+    border-width: 1px 0 0;
+    border-radius: 0;
+    box-shadow: 0 -10px 24px -14px rgb(26 31 44 / 0.3);
+  }
+
+  .panel > * {
+    grid-column: 1 / -1;
+  }
+
+  .panel h2,
+  .pick {
+    display: none;
+  }
+
+  .compact {
+    display: block;
+  }
+
+  .panel > .pilot {
+    grid-column: 1;
+  }
+
+  .panel > .book {
+    grid-column: 2;
+  }
+
+  .panel > .pilotHint {
+    order: 1;
+  }
+
+  .panel:not([data-picked]) .pilot,
+  .panel:not([data-picked]) .book {
+    display: none;
   }
 }

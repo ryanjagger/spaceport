@@ -17,9 +17,8 @@
 }
 
 .toggle input {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--ink);
+  width: 18px;
+  height: 18px;
 }
 
 .day {
@@ -31,11 +30,11 @@
 
 .today {
   padding: 2px 8px;
-  border-radius: 3px;
-  background: var(--signal);
-  font-family: var(--font-body);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
   font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  font-weight: 600;
 }
 
 .list {
@@ -47,8 +46,7 @@
 
 .group h3 {
   padding-bottom: 6px;
-  border-bottom: 2px solid var(--ink);
-  font-size: 1.1rem;
+  border-bottom: 1px solid var(--line-strong);
 }
 
 .group ul {
@@ -82,19 +80,16 @@
 }
 
 .entryTimes {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .cancelled {
-  padding: 1px 6px;
-  border-radius: 3px;
+  padding: 1px 8px;
+  border-radius: 999px;
   background: var(--danger-soft);
   color: var(--danger);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
 /* On narrow screens the grouped list is the view; the timeline needs width to read. */

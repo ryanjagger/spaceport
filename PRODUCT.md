@@ -71,7 +71,7 @@ Carried over from SPACEPORT-PRD.md and BRIEF.md, not reconfirmed in the init int
 
 - Name: Spaceport Charter System, for the Pacific Spaceport.
 - Voice in the brief: plain and lightly wry ("Welcome, dispatcher").
-- The current frontend look (palette and typefaces in `frontend/src/styles/global.css`) is **not binding**. It was a first pass and may be replaced.
+- Visual direction (chosen 2026-10-01): the category standard for a scheduling tool, played straight, at the craft level of Linear and the Stripe Dashboard. No themed world. `DESIGN.md` records the system; it replaced the first-pass navy and amber look.
 - No logo or other identity assets exist.
 
 ## Evidence on Hand

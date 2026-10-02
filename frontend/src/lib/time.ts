@@ -60,6 +60,28 @@ export function centralDate(iso: string): string {
   return wallClock(iso, SPACEPORT_TZ).date
 }
 
+/** Minutes after midnight on the spaceport's clock: 9:30 AM is 570. */
+export function centralMinutes(iso: string): number {
+  return wallClock(iso, SPACEPORT_TZ).minutes
+}
+
+/** Whether an instant falls inside the operating day drawn on the 6:00 AM–10:00 PM axis. */
+export function isWithinOperatingDay(iso: string): boolean {
+  const minutes = centralMinutes(iso)
+  return minutes >= MINUTES_OPEN && minutes <= MINUTES_CLOSE
+}
+
+/** "9 AM" for the hour that starts 540 minutes after midnight. */
+export function formatHour(minutes: number): string {
+  const hour = Math.floor(minutes / 60)
+  return `${hour % 12 || 12} ${hour < 12 ? 'AM' : 'PM'}`
+}
+
+/** "Thu, Oct 1, 2026, 4:12 PM CT" */
+export function formatDateTime(iso: string): string {
+  return `${formatDate(centralDate(iso))}, ${formatTime(iso)} CT`
+}
+
 /** "8:00 AM" in spaceport time. */
 export function formatTime(iso: string): string {
   return clockTime(iso, SPACEPORT_TZ)
