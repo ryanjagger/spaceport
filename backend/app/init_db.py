@@ -14,6 +14,7 @@ from sqlalchemy import Engine, text
 from app import rules
 from app.config import SCHEMA_FILE, get_settings
 from app.db import get_engine
+from app.load_seed import load_seed
 
 log = logging.getLogger("spaceport.init_db")
 
@@ -100,9 +101,6 @@ def main() -> None:
     log.info("schema applied and %s verified", CONSTRAINT_NAME)
 
     if args.reset:
-        # Imported here: the loader depends on this package, not the other way round.
-        from scripts.load_seed import load_seed
-
         seed_file = get_settings().seed_file
         log.info(
             "reset: reloaded %d bookings from %s", load_seed(get_engine(), seed_file), seed_file

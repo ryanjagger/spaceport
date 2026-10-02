@@ -7,7 +7,7 @@ import pytest
 from sqlalchemy import Engine, text
 from sqlalchemy.exc import IntegrityError
 
-from scripts.load_seed import SeedError, load_seed
+from app.load_seed import SeedError, load_seed
 
 SHIPS = [{"id": 1, "name": "USS Wanderer"}, {"id": 2, "name": "Nostromo"}]
 

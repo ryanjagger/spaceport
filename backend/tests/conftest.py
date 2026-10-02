@@ -1,3 +1,4 @@
+import os
 from collections.abc import Iterator
 from datetime import datetime
 
@@ -9,7 +10,7 @@ from sqlalchemy.orm import Session
 
 from app import rules
 from app.clock import get_now
-from app.config import get_settings
+from app.config import get_settings, normalise_database_url
 from app.db import get_session
 from app.init_db import init_db
 from app.main import app
@@ -45,8 +46,10 @@ def clock() -> FixedClock:
 
 @pytest.fixture(scope="session")
 def engine() -> Iterator[Engine]:
-    settings = get_settings()
-    url = check_test_database(settings.test_database_url, settings.database_url)
+    test_url = os.environ.get("TEST_DATABASE_URL")
+    url = check_test_database(
+        normalise_database_url(test_url) if test_url else None, get_settings().database_url
+    )
     engine = create_engine(url)
     init_db(engine, reset=True)
     yield engine
