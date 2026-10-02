@@ -8,6 +8,7 @@ transaction: any invalid or conflicting row fails it and commits nothing.
 
 import json
 import logging
+import sys
 from datetime import datetime
 from pathlib import Path
 
@@ -79,7 +80,8 @@ def load_seed(engine: Engine, path: Path) -> int:
 
 
 def main() -> None:
-    logging.basicConfig(level=logging.INFO, format="%(name)s: %(message)s")
+    # stdout, not the default stderr: Railway labels anything on stderr as an error.
+    logging.basicConfig(level=logging.INFO, format="%(name)s: %(message)s", stream=sys.stdout)
     path = get_settings().seed_file
     inserted = load_seed(get_engine(), path)
     if inserted:

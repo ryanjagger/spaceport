@@ -165,13 +165,23 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done.
 ## Step 11 — Railway (confirm first, A10)
 
 - [x] `railway.toml`: Dockerfile build, health check path `/api/health`
-- [ ] Push to a public GitHub repo
-- [ ] Project + Postgres + app service from the repo; `DATABASE_URL` as a variable reference; public domain
-- [ ] Deploy log shows `CREATE EXTENSION btree_gist` succeeded and the seed loaded
-- [ ] Record every setting made through the CLI/MCP in the PRD or `railway.toml`; add the URL to the README
+- [x] Push `build` to GitHub (`ryanjagger/spaceport`, currently **private**)
+- [x] Project + Postgres + app service; `DATABASE_URL` as a variable reference; public domain
+- [ ] App service connected to the GitHub repo (blocked: Railway's GitHub app has no access to the repo, so deploys are `railway up` from a local checkout and pushes do not redeploy)
+- [x] Deploy log shows the schema applied (its first statement is `CREATE EXTENSION btree_gist`) and the seed loaded
+- [x] Settings recorded below; URL added to the README
 
 **Gate:** the live URL books and cancels; a redeploy keeps the data and doesn't re-seed.
-**Result:**
+**Result (2026-10-01):** passed. <https://app-production-a9d8.up.railway.app>: `/api/health` 200; log shows `schema applied and no_overlap_with_buffer verified` and `loaded 3000 bookings`; a booking returned 201, an overlapping one 409, cancel returned `cancelled`; `/fleet` 200. A second deploy logged `bookings already present (or seed empty); nothing loaded`, and the booking made before it (id 3001, cancelled) was still there.
+
+**Settings made through the CLI/MCP (everything needed to rebuild it):**
+
+- Project `spaceport` in workspace "Ryan Jagger's Projects", environment `production`, region `us-west2`.
+- `railway add --database postgres` → service `Postgres` (Railway's template, image `ghcr.io/railwayapp-templates/postgres-ssl:18`, with a volume).
+- `railway add --service app --variables 'DATABASE_URL=${{Postgres.DATABASE_URL}}'`. No other variables; Railway provides `PORT`.
+- Railway-generated domain on `app`: `app-production-a9d8.up.railway.app`.
+- Build and health check come from `railway.toml`.
+- Deploy: `railway up --service app --detach` from the repo root.
 
 ---
 
@@ -180,6 +190,10 @@ Status: `[ ]` todo · `[~]` in progress · `[x]` done.
 - **Step 1.** Node build stage deferred to step 6 (no frontend to build yet) and the fixed-clock fixture to step 4, instead of placeholders.
 - **Step 1.** `PORT` is read by `entrypoint.sh`, not `config.py`; `SEED_FILE` joins `config.py` in step 3.
 - **Step 1.** Compose publishes Postgres on host port **5433** (5432 is taken by a local Postgres on this machine). Containers still use 5432.
+- **Step 11.** Railway's Postgres template is **Postgres 18**, not the 16 the PRD names and Compose runs. `pg_get_constraintdef` returns the identical text on 18.6 (checked locally before deploying), so the startup guard passes; local and live differ by two major versions.
+- **Step 11.** Deployed with `railway up` rather than from GitHub: connecting the repo failed with "User does not have access to the repo". Pushes do not redeploy until the Railway GitHub app is given access.
+- **Step 11.** `railway.toml` works but the CLI warns that config-as-code files are deprecated and stop working after 2026-12-01 (replacement: `.railway/railway.ts`).
+- **Step 11.** `init_db` and `load_seed` now log to stdout; on stderr Railway labelled their normal output as errors.
 - **Step 6.** New endpoint `GET /api/time` → `{ serverNow, timezone }`. The PRD takes "today" from the latest `serverNow`, but only availability returned one and the dashboard never calls availability. Both pages now read the clock from `/api/time` (refetched every 60 s and after every booking or cancel). Added to the PRD's API table.
 - **Step 6.** Fonts are bundled from `@fontsource` packages (Barlow Condensed, IBM Plex Sans, IBM Plex Mono): three extra frontend dependencies, no network request at runtime.
 - **Step 8.** The details panel is a native modal `<dialog>` rather than a side panel: the browser provides the focus trap and Escape.

@@ -23,6 +23,10 @@ Open <http://localhost:8000>. The first start applies the schema and loads 3,000
 
 The seed data is a year of history that ends in early June 2026, so today starts empty. On the Fleet dashboard, "Previous day with bookings" jumps to the seeded days.
 
+### Live demo
+
+<https://app-production-a9d8.up.railway.app> runs the same Dockerfile on Railway with a Railway Postgres database. It is a shared demo: anyone with the link can book or cancel.
+
 ### Local development
 
 ```

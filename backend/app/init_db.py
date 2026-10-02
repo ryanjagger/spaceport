@@ -6,6 +6,7 @@ python -m app.init_db --reset    # drop the tables first (destroys all bookings)
 
 import argparse
 import logging
+import sys
 
 from sqlalchemy import Engine, text
 
@@ -81,7 +82,8 @@ def main() -> None:
     parser.add_argument("--reset", action="store_true", help="drop the tables first")
     args = parser.parse_args()
 
-    logging.basicConfig(level=logging.INFO, format="%(name)s: %(message)s")
+    # stdout, not the default stderr: Railway labels anything on stderr as an error.
+    logging.basicConfig(level=logging.INFO, format="%(name)s: %(message)s", stream=sys.stdout)
     init_db(get_engine(), reset=args.reset)
     log.info("schema applied and %s verified", CONSTRAINT_NAME)
 
