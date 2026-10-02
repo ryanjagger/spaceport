@@ -16,14 +16,14 @@
 .input {
   height: 44px;
   padding: 0 12px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   background: var(--surface);
   min-width: 0;
 }
 
 .input:hover {
-  border-color: var(--muted);
+  border-color: var(--ink);
 }
 
 .button {
@@ -53,7 +53,7 @@
 }
 
 .primary:hover:not(:disabled) {
-  background: #1f335c;
+  background: var(--ink-hover);
 }
 
 .primary:disabled {
@@ -67,14 +67,19 @@
 }
 
 .danger:hover:not(:disabled) {
-  background: #8a1c16;
+  background: var(--danger-hover);
 }
 
 .notice {
   padding: 12px 16px;
+  border: 1px solid;
   border-radius: var(--radius);
-  border-left: 6px solid;
   font-weight: 500;
+}
+
+/* Focused by script as a place to continue from, not as a control: no ring. */
+.notice:focus {
+  outline: none;
 }
 
 .success {
@@ -116,7 +121,7 @@
 .skeletonBar {
   height: 48px;
   border-radius: var(--radius);
-  background: linear-gradient(90deg, #dbe2ea 25%, #eef2f6 50%, #dbe2ea 75%);
+  background: linear-gradient(90deg, var(--line) 25%, var(--paper) 50%, var(--line) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
 }

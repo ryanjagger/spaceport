@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { NoResponseError, type Slot } from '../api/client'
 import {
   useAvailability,
@@ -18,6 +18,7 @@ import {
   type NoticeMessage,
 } from '../components/ui'
 import {
+  addDays,
   centralDate,
   formatDate,
   formatDuration,
@@ -54,13 +55,26 @@ export function CharterPage() {
   // slot that was taken or slipped into the past deselects itself on refresh.
   const slot =
     availability.data?.slots.find((s) => s.start === selectedStart && s.available) ?? null
-  const canBook = slot !== null && pilotName.trim() !== '' && !createBooking.isPending
+  const hasName = pilotName.trim() !== ''
+  const canBook = slot !== null && hasName && !createBooking.isPending
+  // A pick the latest response no longer offers: named in the panel, not dropped silently.
+  const lostStart = selectedStart !== null && availability.data && !slot ? selectedStart : null
+  const noneOpen = availability.data?.slots.every((s) => !s.available) ?? false
+
+  const timesHeading = useRef<HTMLHeadingElement>(null)
 
   // Changing what is being looked at clears the slot but keeps the pilot name.
   function changeView(change: () => void) {
     change()
     setSelectedStart(null)
     setNotice(null)
+  }
+
+  // The button that calls this goes away once the new day has open times, so focus
+  // moves to the heading that names the day now showing.
+  function tryNextDay(from: string) {
+    changeView(() => setDateChoice(addDays(from, 1)))
+    timesHeading.current?.focus()
   }
 
   function selectSlot(picked: Slot) {
@@ -155,7 +169,7 @@ export function CharterPage() {
 
       <div className={styles.columns}>
         <section aria-labelledby="times-heading">
-          <h2 id="times-heading">
+          <h2 id="times-heading" ref={timesHeading} tabIndex={-1}>
             {ship.name} · {formatDate(date)}
           </h2>
           {availability.isError ? (
@@ -165,10 +179,21 @@ export function CharterPage() {
           ) : (
             <>
               <p className={styles.caption}>
-                Last start {formatTime(availability.data.lastStart)} for a{' '}
-                {formatDurationAdjective(duration)} charter (spaceport closes 10:00 PM CT). All
-                times are spaceport time (CT).
+                Last {formatDurationAdjective(duration)} start is{' '}
+                {formatTime(availability.data.lastStart)} (spaceport closes 10:00 PM CT). All times
+                are spaceport time (CT).
               </p>
+              {noneOpen && (
+                <div className={styles.noneOpen}>
+                  <p>
+                    No {formatDurationAdjective(duration)} start times{' '}
+                    {date === today ? 'are left today' : 'are open on this day'} for {ship.name}.
+                  </p>
+                  <button type="button" className={ui.button} onClick={() => tryNextDay(date)}>
+                    Try the next day
+                  </button>
+                </div>
+              )}
               <SlotGrid
                 slots={availability.data.slots}
                 selectedStart={slot?.start ?? null}
@@ -180,7 +205,7 @@ export function CharterPage() {
 
         <form className={styles.panel} onSubmit={submit} aria-labelledby="book-heading">
           <h2 id="book-heading">Your charter</h2>
-          {slot ? (
+          {slot && (
             <dl className={styles.summary}>
               <dt>Ship</dt>
               <dd>{ship.name}</dd>
@@ -191,9 +216,17 @@ export function CharterPage() {
               <dt>Returns</dt>
               <dd>{formatTimeWithHint(slot.end)}</dd>
             </dl>
-          ) : (
-            <p className={styles.hint}>Pick an open start time to book it.</p>
           )}
+          {/* Always in the page, so a pick that stops being available is announced. */}
+          <div className={styles.status} role="status">
+            {!slot && (
+              <p className={styles.hint}>
+                {lostStart
+                  ? `${formatTime(lostStart)} CT is no longer available. Pick another start time.`
+                  : 'Pick an open start time to book it.'}
+              </p>
+            )}
+          </div>
           <label className={ui.field}>
             <span className={ui.label}>Pilot name</span>
             <input
@@ -201,12 +234,14 @@ export function CharterPage() {
               value={pilotName}
               maxLength={100}
               autoComplete="off"
+              required
               onChange={(e) => setPilotName(e.target.value)}
             />
           </label>
           <button type="submit" className={`${ui.button} ${ui.primary}`} disabled={!canBook}>
             {createBooking.isPending ? 'Booking…' : 'Book charter'}
           </button>
+          {slot && !hasName && <p className={styles.hint}>Enter a pilot name to book.</p>}
         </form>
       </div>
     </>

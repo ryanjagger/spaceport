@@ -42,6 +42,15 @@ export function FleetDashboard() {
     setNotice(null)
   }
 
+  // The "day with bookings" buttons go away once a day has bookings, so focus moves
+  // to the heading that names the day now showing.
+  const dayHeading = useRef<HTMLHeadingElement>(null)
+
+  function jumpTo(day: string | null) {
+    goTo(day)
+    dayHeading.current?.focus()
+  }
+
   if (serverNow.isError) {
     return <ErrorState error={serverNow.error} onRetry={() => serverNow.refetch()} />
   }
@@ -94,7 +103,7 @@ export function FleetDashboard() {
 
       <Notice notice={notice} />
 
-      <h2 className={styles.day}>
+      <h2 className={styles.day} ref={dayHeading} tabIndex={-1}>
         {formatDate(date)}
         {date === today && <span className={styles.today}>Today</span>}
       </h2>
@@ -109,7 +118,7 @@ export function FleetDashboard() {
             type="button"
             className={ui.button}
             disabled={!nearest.data?.previous}
-            onClick={() => goTo(nearest.data!.previous)}
+            onClick={() => jumpTo(nearest.data!.previous)}
           >
             ← Previous day with bookings
           </button>
@@ -117,7 +126,7 @@ export function FleetDashboard() {
             type="button"
             className={ui.button}
             disabled={!nearest.data?.next}
-            onClick={() => goTo(nearest.data!.next)}
+            onClick={() => jumpTo(nearest.data!.next)}
           >
             Next day with bookings →
           </button>

@@ -5,11 +5,17 @@
   --ink: #12203a;
   --muted: #55627a;
   --line: #c8d2de;
+  /* Edges of things you type into or click: 3:1 or better against paper and surface. */
+  --line-strong: #6a768c;
+  --ink-hover: #1f335c;
+  --on-ink-muted: #c9d3e6;
   --signal: #f5b301;
   --signal-soft: #fff3cc;
   --orbit: #2448b8;
+  --orbit-hover: #1a3690;
   --orbit-soft: #dce5fb;
   --danger: #a8231c;
+  --danger-hover: #8a1c16;
   --danger-soft: #fbe6e4;
   --ok: #17663f;
   --ok-soft: #dff3e8;
@@ -33,7 +39,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.45;
 }
 

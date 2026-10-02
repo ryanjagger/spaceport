@@ -86,7 +86,8 @@ export function BookingDetails({ booking, ship, serverNow, onClose, onCancelled 
 
       <div className={styles.actions}>
         {canCancel && !confirming && (
-          // autoFocus on this pair keeps keyboard focus on the step that replaces the last one.
+          // autoFocus keeps keyboard focus on the step that replaces the last one. In the
+          // confirm step it lands on the safe choice, so pressing Enter twice can't cancel.
           <button type="button" className={ui.button} autoFocus onClick={() => setConfirming(true)}>
             Cancel booking
           </button>
@@ -97,7 +98,6 @@ export function BookingDetails({ booking, ship, serverNow, onClose, onCancelled 
             <button
               type="button"
               className={`${ui.button} ${ui.danger}`}
-              autoFocus
               disabled={cancelBooking.isPending}
               onClick={cancel}
             >
@@ -106,6 +106,7 @@ export function BookingDetails({ booking, ship, serverNow, onClose, onCancelled 
             <button
               type="button"
               className={ui.button}
+              autoFocus
               disabled={cancelBooking.isPending}
               onClick={() => setConfirming(false)}
             >

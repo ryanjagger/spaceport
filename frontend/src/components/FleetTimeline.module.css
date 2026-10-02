@@ -66,21 +66,22 @@
   justify-content: center;
   padding: 0 6px;
   border: 0;
-  border-left: 4px solid var(--ink);
   border-radius: 3px;
   background: var(--orbit);
   color: var(--surface);
   text-align: left;
   overflow: hidden;
   cursor: pointer;
+  /* Lets the label below adapt to the block's own width, i.e. the booking's length. */
+  container-type: inline-size;
 }
 
 .block:hover {
-  background: #1a3690;
+  background: var(--orbit-hover);
 }
 
 .block:focus-visible {
-  outline-color: var(--signal);
+  outline-color: var(--ink);
   z-index: 1;
 }
 
@@ -99,8 +100,24 @@
 
 .times {
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.7rem;
   opacity: 0.9;
+}
+
+/* A short booking has no room for both lines: drop the times (the axis and the list
+   below carry them) and let the pilot's name wrap onto the freed line. */
+@container (max-width: 120px) {
+  .times {
+    display: none;
+  }
+
+  .pilot {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }
 
 .refuel,

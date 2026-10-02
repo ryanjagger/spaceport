@@ -13,16 +13,33 @@ const MINUTES_CLOSE = 22 * 60
 
 type Zone = string | undefined // undefined = the browser's own time zone
 
+// Building an Intl.DateTimeFormat is slow next to using one, and a slot grid formats
+// about 150 times per render, so each format is built once per zone and reused.
+function perZone(options: Intl.DateTimeFormatOptions) {
+  const built = new Map<Zone, Intl.DateTimeFormat>()
+  return (timeZone: Zone) => {
+    let format = built.get(timeZone)
+    if (!format) {
+      format = new Intl.DateTimeFormat('en-US', { ...options, timeZone })
+      built.set(timeZone, format)
+    }
+    return format
+  }
+}
+
+const wallClockFormat = perZone({
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  hourCycle: 'h23',
+})
+const clockTimeFormat = perZone({ hour: 'numeric', minute: '2-digit' })
+const weekdayFormat = perZone({ weekday: 'short' })
+
 function wallClock(iso: string, timeZone: Zone) {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hourCycle: 'h23',
-  }).formatToParts(new Date(iso))
+  const parts = wallClockFormat(timeZone).formatToParts(new Date(iso))
   const get = (type: string) => parts.find((p) => p.type === type)!.value
   return {
     date: `${get('year')}-${get('month')}-${get('day')}`,
@@ -31,13 +48,11 @@ function wallClock(iso: string, timeZone: Zone) {
 }
 
 function clockTime(iso: string, timeZone: Zone): string {
-  return new Intl.DateTimeFormat('en-US', { timeZone, hour: 'numeric', minute: '2-digit' }).format(
-    new Date(iso),
-  )
+  return clockTimeFormat(timeZone).format(new Date(iso))
 }
 
 function weekday(iso: string, timeZone: Zone): string {
-  return new Intl.DateTimeFormat('en-US', { timeZone, weekday: 'short' }).format(new Date(iso))
+  return weekdayFormat(timeZone).format(new Date(iso))
 }
 
 /** The Central calendar date of an instant, e.g. "today" from the server's clock. */
@@ -99,15 +114,17 @@ function atNoonUtc(date: string): Date {
   return new Date(`${date}T12:00:00Z`)
 }
 
+const dateFormat = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'UTC',
+  weekday: 'short',
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+})
+
 /** "Fri, Oct 2, 2026" */
 export function formatDate(date: string): string {
-  return new Intl.DateTimeFormat('en-US', {
-    timeZone: 'UTC',
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  }).format(atNoonUtc(date))
+  return dateFormat.format(atNoonUtc(date))
 }
 
 export function addDays(date: string, days: number): string {

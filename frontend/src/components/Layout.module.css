@@ -34,7 +34,7 @@
   padding: 0 14px;
   min-height: 44px;
   border-bottom: 4px solid transparent;
-  color: #c9d3e6;
+  color: var(--on-ink-muted);
   font-weight: 500;
   text-decoration: none;
 }
