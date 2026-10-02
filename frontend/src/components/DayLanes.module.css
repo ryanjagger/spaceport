@@ -139,8 +139,17 @@
   white-space: nowrap;
 }
 
-@container (max-width: 56px) {
+/* A short booking still names its pilot, cut with an ellipsis; only a block with no
+   room for a couple of letters goes blank. A clipped time would mislead, so the pick's
+   own label needs its full width or it is left out (the panel shows the time). */
+@container (max-width: 20px) {
   .pilot {
+    display: none;
+  }
+}
+
+@container (max-width: 56px) {
+  .pickLabel {
     display: none;
   }
 }

@@ -84,6 +84,7 @@ export function DayLanes({
                       <span
                         className={styles.block}
                         style={{ left: percent(start), width: percent(end - start) }}
+                        title={`${booking.pilotName}, ${formatRange(booking.startTime, booking.endTime)}`}
                       >
                         <span className={styles.pilot}>{booking.pilotName}</span>
                       </span>
@@ -104,7 +105,9 @@ export function DayLanes({
                       width: percent(dayFraction(pick.end) - dayFraction(pick.start)),
                     }}
                   >
-                    <span className={styles.pilot}>{formatTime(pick.start)}</span>
+                    <span className={`${styles.pilot} ${styles.pickLabel}`}>
+                      {formatTime(pick.start)}
+                    </span>
                   </span>
                 )}
                 {now && <span className={styles.now} style={{ left: percent(dayFraction(now)) }} />}
