@@ -1,0 +1,92 @@
+/* Each start time is a flight strip: time on top, state underneath. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-height: 64px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--surface);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 120ms,
+    transform 120ms;
+}
+
+.slot:hover:not(:disabled) {
+  background: var(--signal-soft);
+  transform: translateY(-1px);
+}
+
+.time {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.status {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.local {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.selected {
+  border-color: var(--ink);
+  border-left-color: var(--ink);
+  background: var(--signal);
+}
+
+.selected:hover:not(:disabled) {
+  background: var(--signal);
+}
+
+.selected .status,
+.selected .local {
+  color: var(--ink);
+}
+
+.slot:disabled {
+  border-left-color: var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.slot:disabled .time {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.slot:disabled .status {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.booked:disabled {
+  border-left-color: var(--orbit);
+}
+
+/* The same hatch the fleet timeline uses for the refuel buffer. */
+.buffer:disabled {
+  border-left-color: var(--signal);
+  background: repeating-linear-gradient(-45deg, transparent 0 6px, rgb(245 179 1 / 22%) 6px 9px);
+}
